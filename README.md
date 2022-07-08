@@ -8,3 +8,5 @@ This artwork attempts to represent, visually, what these singularities would be 
 I have always been fascinated by these singularities, especially, because inside them the same physical laws do not apply as in the rest of the universe. As in generative art, the same rules of traditional computing do not apply either.
 
 “The Universe is written in a mathematical code” Galileo
+
+Just press "s" key and enjoy the journey watching stars or black holes rotating and changing shape. You can stop when ever you want pressing "space bar"
