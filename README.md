@@ -9,4 +9,4 @@ I have always been fascinated by these singularities, especially, because inside
 
 “The Universe is written in a mathematical code” Galileo
 
-Just press "s" key and enjoy the journey watching stars, planets forming and black holes rotating and changing shape. You can pause the journey when ever you want pressing "space bar" and press "s" again to continue.
+Just press "s" key or mouse click and enjoy the journey watching stars, planets forming and black holes rotating and changing shape. You can pause the journey when ever you want pressing "space bar" or mouse click and press "s" or mouse click again to continue.
