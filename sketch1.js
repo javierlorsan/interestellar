@@ -50,23 +50,19 @@ let colors32 = ["#222124", "#E7C02C", "#4F2A9A", "#EBDEA3", "#4C3033", "#B2C12B"
 let colors33 = ["#A6B996", "#4C3033", "#E7C02C", "#0B682D", "#8562CA", "#97F209", "#F6F4F2", "#8F7791", "#B2C12B", "#EBDEA3"];
 let paleta = [colors1, colors2, colors3, colors4, colors5, colors6, colors7, colors8, colors9, colors10, colors11, colors12, colors13, colors14, colors15, colors16, colors17, colors18, colors19, colors20, colors21, colors22, colors23, colors24, colors25, colors26, colors27, colors28, colors29, colors30, colors31, colors32, colors33];
 let colores = [["#9b5de5", "#f15bb5", "#fee440", "#00bbf9", "#00f5d4"], ["#ffbe0b", "#fb5607", "#ff006e", "#8338ec", "#3a86ff"], ["#FA053F", "#FEB200", "#03FDBC", "#04BEFB", "#06617F"], ["#ef476f", "#ffd166", "#06d6a0", "#118ab2", "#073b4c"], ["#C2C8D4", "#2b9348", "#BF6550", "#80b918", "#8C32CA", "#C61D34", "#d4d700", "#580D14", "#eeef20", "#C70A27"], ["#54478c", "#2c699a", "#048ba8", "#0db39e", "#16db93", "#83e377", "#b9e769", "#efea5a", "#f1c453", "#f29e4c"].reverse()];
-let lncolors1 = ["#fefae0", "#edf6f9", "#e9f5db"];
-let lncolors2 = ["#1b4332", "#003459", "#5e503f"];
 let shg = [0.1, 0.6, 10.244999999999921, 10.052999999999976, 8.3, 10.261999999999912, 10.262999999999911, -10.45, 10.755555, 11.204999999999977, 11.979999999999995, 15, 16.419999999999973, 16.6, 16.8, -180, 2.3, 2.4, 25.247, 26.179999999999435, 33.259000000000064, -7.35551, -7.35553, 8.7, -8.7];
 let shm = [0.7, 1.1, 1.6, 1.8, 30.26399999999995, 10.420999999999824, 11.461999999999835, 16.7, 17.75000000000018, 18.7, 18.710000000000097, 2.1, 2.2, 27.228999999999854, 29.30399999999944, 29.31399999999944, 32.078999999999645, 33.56400000000022, -5.655, 6.9, 7.4, -7.4, 8.4, -8.4, -9.351, -9.352, -9.355];
 let shmg = [0.9, 10, 10.00859999999998, 10.08299999999996, 10.087999999999957, 10.22899999999993, 11.519999999999802, 13.919999999999954, 14.9, 2.5, 2.6, 25.215, 25.219, 26.528999999999993, 28.818999999999537, -3.3, 30.36899999999993, 34.024000000000456];
 let shp = [0.2, 1.2, 1.3, -1.3, 10.471999999999795, 11.366999999999887, 11.39699999999987, 11.9, 12.559999999999983, 14.2, 14.279999999999946, 14.28, 18.1, 30.15899999999997, 31.428999999999718, 5.1, -5.55, 6.1, -6.5555];
 let shmp = [18.570000000000075, 18.85000000000012, 25.13, 25.131, 25.1312, 25.1313];
 let steps = shg.concat(shm, shmg, shp, shmp);
-let img;
+let img, nebul;
 let WIDTH = window.innerWidth;
 let HEIGHT = window.innerHeight;
 let sz = Math.min(WIDTH, HEIGHT);
-let palette, palette2;
+let palette;
 let tokenHash = fxhash;
 let seed = Math.abs(hashes[0]);
-let strmove = true;
-let stopmov = true;
 let noiseScale = 9e-11;
 let bgcolor = '#000000', bgstk = '#ffffff';
 let R = new Random(seed);
@@ -80,14 +76,22 @@ let star;
 let pt = [];
 let speed = 1;
 let angle = 0;
+let w = sz * 1.2;
+let k = Math.floor(w / 2);
+let pts = [], ptsch = [];
+let col1, col2, col3;
+let preduc = Math.floor(((0.85 * sz) / 657) * 100) / 100;
+let incirc = (70000 * Math.floor(sz * preduc)) / 1000;
+//let nebs = [];
+//let nebNum = 1000;
 
 function setup() {
 
-    createCanvas(sz * 1.20, sz);
-    img = createGraphics(sz * 1.20, sz);    
+    createCanvas(sz * 1.2, sz); 
+    img = createGraphics(sz * 1.2, sz);  
     pixelDensity(1);
     centerCanvas();
-    //frameRate(10);
+    frameRate(60);
     ellipseMode(CORNER);
 
     let colArr = [];
@@ -99,14 +103,49 @@ function setup() {
         colArr.push(R.random_choice(paleta)[R.random_int(0, 9)]);
     }
     palette = colArr;
+
     star = new Star(100, 100);
     for (z = 0; z < 1600; z++) {
-        pt.push(new parti());
+        pt.push(new parti(z, R.random_choice(palette), R.random_num(2, 5)));
     }
 
-    makeTl();
+    background(bgcolor);
 
+    if (strk > 0.92) {
+        initplanet();
+    }
+    else { noLoop(); makeTl(); }
+} 
 
+function initplanet() {
+
+    col1 = R.random_choice(colores)[R.random_int(0, 4)];
+    col2 = R.random_choice(colores)[R.random_int(0, 4)];
+    col3 = R.random_choice(paleta)[R.random_int(0, 9)];
+
+    pts = (Array(k).fill(0)).map(rd_point)
+    ptsch = randChunkSplit(pts, R.random_choice([10,20,30,40,50]));
+
+}
+
+function randChunkSplit(arr, min, max) {
+    var arrs = [], size = 1;
+    var min = min || 1;
+    var max = max || min || 1;
+    while (arr.length > 0) {
+        size = Math.min(max, Math.floor((R.random_dec() * max) + min));
+        arrs.push(arr.splice(0, size));
+    }
+    return arrs;
+}
+
+function rd_point() {
+    r = random(w / 4)
+    t = random(TAU)
+    return [
+        w / 2 + cos(t) * r,
+        w / 2 + sin(t) * r
+    ]
 }
 
 function centerCanvas() {
@@ -118,10 +157,9 @@ function keyPressed() {
     if (key == ' ') {
         noLoop();
     }
-    if (key == 'c') {
+    if (key == 's') {
         loop();
     }
-
 }
 
 function makeTl() {
@@ -131,7 +169,7 @@ function makeTl() {
     const alph = R.random_int(75, 255);
     const rdlrpal = R.random_int(0, colores.length - 1)
     //let rseed = floor(R.random_num(0, 10e6));
-    let npoints = R.random_int(1000, 5000);
+    let npoints = R.random_int(1000, 4000);
     let mapP = int(npoints * 0.6);
     let x, y;
 
@@ -158,8 +196,6 @@ function makeTl() {
         x = rd1 * R.random_num(-d, d) / t;
         y = rd2 * R.random_num(-d, d) / t;
 
-        //img.strokeWeight(size);
-
         if (floor(x / sz * n) % 2 == 0) {
             color = lerpColorScheme(curlNoise(x * noiseScale, (y + 0) * noiseScale, 0), colores[rdlrpal], alph);
         } else {
@@ -175,7 +211,6 @@ function makeTl() {
     }
 
 }
-
 
 class cshape {
     constructor(x, y, seed, color, size, n, alph, rdlrpal, np) {
@@ -241,7 +276,6 @@ function customShape(ox, oy, seed) {
         vertex(x, y);
     }
     img.endShape(CLOSE);
-    //if (cshapes.length >= 1000) t = 0;
 }
 
 function draw() {
@@ -265,11 +299,16 @@ function draw() {
         star.draw();
     }
 
-    if (frameCount < rotspd || frameCount % rotspd == 0) {
-        img.clear();
-        for (let cs of cshapes) {
-            cs.show();
-            cs.move();
+    if (strk > 0.92) {
+        planet();
+    }
+    else {
+        if (frameCount < rotspd || frameCount % rotspd == 0) {
+            img.clear();
+            for (let cs of cshapes) {
+                cs.show();
+                cs.move();
+            }
         }
     }
 
@@ -277,12 +316,40 @@ function draw() {
     image(imgClone, 0, 0);
 }
 
+function planet() {
+
+    for (i = ptsch.length; --i;) {
+        for (j = ptsch[i].length; --j;) {
+            [x, y] = ptsch[i][j];
+            if (i % 2 == 0) {
+                x += sin(n = noise(x / Math.floor(w * 0.5), y / Math.floor(w * 0.5)) * TAU)
+                y += cos(n);
+                if (j % 2 == 0) img.stroke(col1);
+                else img.stroke(col3);
+            } else {
+                x -= sin(n = noise(x / Math.floor(w * 0.5), y / Math.floor(w * 0.5)) * TAU)
+                y -= cos(n);
+                if (j % 2 == 0) img.stroke(col2);
+                else img.stroke(col3);
+            }
+            img.circle(x, y, .3)
+            if (pow(k - x, 2) + pow(k - y, 2) < incirc)
+                ptsch[i][j] = [x, y, t]
+            else ptsch[i][j] = rd_point()
+        }
+    }
+
+}
+
 class parti {
-    constructor() {
+    constructor(nb, col, inc) {
+        this.nb = nb;
         this.x = random(-width, width);
         this.y = random(-height, height);
         this.z = random(width);
         this.pz = this.z;
+        this.col = col;
+        this.inc = inc;
     }
 
     update() {
@@ -296,22 +363,28 @@ class parti {
     }
 
     show() {
-        fill(255);
         noStroke();
-
         var sx = map(this.x / this.z, 0, 1, 0, width);
         var sy = map(this.y / this.z, 0, 1, 0, height);
         var r = map(this.z, 0, width, 12, 0);
-        ellipse(sx, sy, r, r);
+        //if (this.nb % 16 != 0) {
+            fill(255);
+            ellipse(sx, sy, r, r);
+        //} else {
+        //    fill(this.col);
+        //    let wc = r * this.inc;
+        //    ellipse(sx, sy, wc, wc);
+        //}
     }
 }
 
+
 function Star(x, y) {
-    this.x = round(random(0, sz * 1.2));
-    this.y = round(random(0, sz / 2));
-    this.xv = round(random([-3, -2, 2, 3]));
-    this.yv = random(0.5, 1.5);
-    this.r = round(random(3, 5));
+    this.x = round(R.random_num(0, sz * 1.2));
+    this.y = round(R.random_num(0, sz / 2));
+    this.xv = round(R.random_choice([-3, -2, 2, 3]));
+    this.yv = R.random_num(0.5, 1.5);
+    this.r = round(R.random_num(3, 5));
     this.tail = [];
     this.tailLength = 60;
     this.startColor = "#fce1b4";
