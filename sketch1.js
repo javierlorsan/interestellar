@@ -92,7 +92,7 @@ function setup() {
     img = createGraphics(sz * 1.2, sz);  
     pixelDensity(1);
     centerCanvas();
-    frameRate(60);
+    //frameRate(60);
     ellipseMode(CORNER);
 
     let colArr = [];
