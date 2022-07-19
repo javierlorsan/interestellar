@@ -82,6 +82,7 @@ let pts = [], ptsch = [];
 let col1, col2, col3;
 let preduc = Math.floor(((0.85 * sz) / 657) * 100) / 100;
 let incirc = (70000 * Math.floor(sz * preduc)) / 1000;
+let mot = false;
 //let nebs = [];
 //let nebNum = 1000;
 
@@ -155,9 +156,21 @@ function centerCanvas() {
 
 function keyPressed() {
     if (key == ' ') {
+        mot = false;
         noLoop();
     }
     if (key == 's') {
+        mot = true;
+        loop();
+    }
+}
+
+function mouseClicked() {
+    if (mot) {
+        mot = false;
+        noLoop();
+    } else {
+        mot = true;
         loop();
     }
 }
@@ -367,14 +380,8 @@ class parti {
         var sx = map(this.x / this.z, 0, 1, 0, width);
         var sy = map(this.y / this.z, 0, 1, 0, height);
         var r = map(this.z, 0, width, 12, 0);
-        //if (this.nb % 16 != 0) {
-            fill(255);
-            ellipse(sx, sy, r, r);
-        //} else {
-        //    fill(this.col);
-        //    let wc = r * this.inc;
-        //    ellipse(sx, sy, wc, wc);
-        //}
+        fill(255);
+        ellipse(sx, sy, r, r);
     }
 }
 
