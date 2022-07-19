@@ -243,7 +243,6 @@ class cshape {
         this.np = np;
         this.alph = alph;
         this.rdlrpal = rdlrpal;
-        this.speed = 10; //0.003;
         this.init();
         this.rnd = 1;
     }
@@ -267,10 +266,10 @@ class cshape {
     }
 
     move() {
-        if (this.rnd == 0) {
-            this.ang = frameCount / 100;
-            this.rnd = 1;
-        }
+        //if (this.rnd == 0) {
+            this.ang = frameCount / 80;
+        //    this.rnd = 1;
+        //}
         if (floor(this.x / this.sz * this.n) % 2 == 0) {
             this.color = lerpColorScheme(curlNoise(this.x * noiseScale, (this.y + 0) * noiseScale, 0), colores[this.rdlrpal], this.alph);
         } else {
