@@ -83,8 +83,6 @@ let col1, col2, col3;
 let preduc = Math.floor(((0.85 * sz) / 657) * 100) / 100;
 let incirc = (70000 * Math.floor(sz * preduc)) / 1000;
 let mot = false;
-//let nebs = [];
-//let nebNum = 1000;
 
 function setup() {
 
@@ -92,7 +90,7 @@ function setup() {
     img = createGraphics(sz * 1.2, sz);  
     pixelDensity(1);
     centerCanvas();
-    //frameRate(60);
+    frameRate(60);
     ellipseMode(CORNER);
 
     let colArr = [];
