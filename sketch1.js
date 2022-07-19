@@ -184,9 +184,11 @@ function makeTl() {
     let mapP = int(npoints * 0.6);
     let x, y;
 
-    if (npoints >= 3000) frameRate(90);
-    else if (npoints >= 2000) frameRate(60);
-    else frameRate(30);
+    console.log(npoints);
+
+    if (npoints < 2000) frameRate(25);
+    /*else if (npoints >= 2000) frameRate(60);
+    else frameRate(30);*/
     
     let fr = 0.32;
     let tp = R.random_choice(steps);
