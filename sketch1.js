@@ -90,7 +90,6 @@ function setup() {
     img = createGraphics(sz * 1.2, sz);  
     pixelDensity(1);
     centerCanvas();
-    frameRate(60);
     ellipseMode(CORNER);
 
     let colArr = [];
@@ -110,8 +109,9 @@ function setup() {
 
     background(bgcolor);
 
-    if (strk > 0.92) {
+    if (strk > 0.93) {
         initplanet();
+        mot = true;
     }
     else { noLoop(); makeTl(); }
 } 
@@ -142,8 +142,8 @@ function rd_point() {
     r = random(w / 4)
     t = random(TAU)
     return [
-        w / 2 + cos(t) * r,
-        w / 2 + sin(t) * r
+        w / 2 + Math.cos(t) * r,
+        w / 2 + Math.sin(t) * r
     ]
 }
 
@@ -184,6 +184,10 @@ function makeTl() {
     let mapP = int(npoints * 0.6);
     let x, y;
 
+    if (npoints >= 3000) frameRate(90);
+    else if (npoints >= 2000) frameRate(60);
+    else frameRate(30);
+    
     let fr = 0.32;
     let tp = R.random_choice(steps);
     if (shm.indexOf(tp) != -1) { fr = 0.40; }
@@ -199,6 +203,8 @@ function makeTl() {
     let rd1 = random(0, 75);
     let rd2 = random(0, 55);
     let color;
+
+    console.log(strk);
 
     for (let i = 0; i < npoints; i++) {
         let size = map((i / mapP) ** 0.8, 0, 1, sz * fr, 0);
@@ -245,12 +251,17 @@ class cshape {
         img.strokeWeight(this.sz);
         //img.rotate(radians(frameCount / 100));
         //if (this.n < this.np / 2) {
-            img.rotate(radians(this.ang));
+        img.rotate(radians(this.ang));
         //} else {
         //    img.rotate(-this.ang);
         //}
+
+        if (strk > 0.5) {
+            if (floor(this.x / this.sz * this.n) % 2 == 0) { img.blendMode(BURN); }
+            else { img.blendMode(BLEND); }
+        }
+
         customShape(this.x, this.y, this.rseed);
-        console.log(radians(this.ang));
     }
 
     move() {
@@ -282,8 +293,8 @@ function customShape(ox, oy, seed) {
     img.beginShape();
     for (let i = 0; i < 15; i++) {
         t += seed;
-        let x = sin(t) + ox;
-        let y = cos(t) + oy;
+        let x = Math.sin(t) + ox;
+        let y = Math.cos(t) + oy;
         vertex(x, y);
     }
     img.endShape(CLOSE);
@@ -310,10 +321,11 @@ function draw() {
         star.draw();
     }
 
-    if (strk > 0.92) {
+    if (strk > 0.93) {
         planet();
     }
     else {
+        //console.log(frameRate().toFixed(2));
         if (frameCount < rotspd || frameCount % rotspd == 0) {
             img.clear();
             for (let cs of cshapes) {
@@ -333,13 +345,13 @@ function planet() {
         for (j = ptsch[i].length; --j;) {
             [x, y] = ptsch[i][j];
             if (i % 2 == 0) {
-                x += sin(n = noise(x / Math.floor(w * 0.5), y / Math.floor(w * 0.5)) * TAU)
-                y += cos(n);
+                x += Math.sin(n = noise(x / Math.floor(w * 0.5), y / Math.floor(w * 0.5)) * TAU)
+                y += Math.cos(n);
                 if (j % 2 == 0) img.stroke(col1);
                 else img.stroke(col3);
             } else {
-                x -= sin(n = noise(x / Math.floor(w * 0.5), y / Math.floor(w * 0.5)) * TAU)
-                y -= cos(n);
+                x -= Math.sin(n = noise(x / Math.floor(w * 0.5), y / Math.floor(w * 0.5)) * TAU)
+                y -= Math.cos(n);
                 if (j % 2 == 0) img.stroke(col2);
                 else img.stroke(col3);
             }
