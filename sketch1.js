@@ -56,7 +56,7 @@ let shmg = [0.9, 10, 10.00859999999998, 10.08299999999996, 10.087999999999957, 1
 let shp = [0.2, 1.2, 1.3, -1.3, 10.471999999999795, 11.366999999999887, 11.39699999999987, 11.9, 12.559999999999983, 14.2, 14.279999999999946, 14.28, 18.1, 30.15899999999997, 31.428999999999718, 5.1, -5.55, 6.1, -6.5555];
 let shmp = [18.570000000000075, 18.85000000000012, 25.13, 25.131, 25.1312, 25.1313];
 let steps = shg.concat(shm, shmg, shp, shmp);
-let img, nebul;
+let img;
 let WIDTH = window.innerWidth;
 let HEIGHT = window.innerHeight;
 let sz = Math.min(WIDTH, HEIGHT);
@@ -83,6 +83,7 @@ let col1, col2, col3;
 let preduc = Math.floor(((0.85 * sz) / 657) * 100) / 100;
 let incirc = (70000 * Math.floor(sz * preduc)) / 1000;
 let mot = false;
+let pxs = [];
 
 function setup() {
 
@@ -95,6 +96,16 @@ function setup() {
     let colArr = [];
     let ncols = 10;
 
+    while (pxs.length < 5000) {
+        let x = random(w);
+        let y = random(sz);
+        if (dist(x, y, w / 2, sz / 2) > w * 0.30) {
+            let adj = map(y, 0, sz, 255, 0);
+            let c = color(60, adj, 255);
+            pxs.push(new Pxl(x, y, c));
+        }
+    }
+
     if (tkid % 2 == 0) ncols = 1;
 
     for (t = 0; t < ncols; t++) {
@@ -103,8 +114,8 @@ function setup() {
     palette = colArr;
 
     star = new Star(100, 100);
-    for (z = 0; z < 1600; z++) {
-        pt.push(new parti(z, R.random_choice(palette), R.random_num(2, 5)));
+    for (z = 0; z < 1200; z++) {
+        pt.push(new parti(z, R.random_num(2, 5)));
     }
 
     background(bgcolor);
@@ -184,8 +195,6 @@ function makeTl() {
     let mapP = int(npoints * 0.6);
     let x, y;
 
-    console.log(npoints);
-
     if (npoints < 2000) frameRate(25);
     /*else if (npoints >= 2000) frameRate(60);
     else frameRate(30);*/
@@ -194,7 +203,7 @@ function makeTl() {
     let tp = R.random_choice(steps);
     if (shm.indexOf(tp) != -1) { fr = 0.40; }
     else if (shp.indexOf(tp) != -1) { fr = 0.54; }
-    else if (shmp.indexOf(tp) != -1) { fr = 0.75; }
+    else if (shmp.indexOf(tp) != -1) { fr = 0.72; }
     else if (shmg.indexOf(tp) != -1) { fr = 0.20; }
 
     let radius = sz * 0.00;
@@ -205,8 +214,6 @@ function makeTl() {
     let rd1 = random(0, 75);
     let rd2 = random(0, 55);
     let color;
-
-    console.log(strk);
 
     for (let i = 0; i < npoints; i++) {
         let size = map((i / mapP) ** 0.8, 0, 1, sz * fr, 0);
@@ -267,7 +274,8 @@ class cshape {
 
     move() {
         //if (this.rnd == 0) {
-            this.ang = frameCount / 80;
+        this.ang = frameCount / 100;
+        //this.ang += 0.01;
         //    this.rnd = 1;
         //}
         if (floor(this.x / this.sz * this.n) % 2 == 0) {
@@ -322,11 +330,16 @@ function draw() {
         star.draw();
     }
 
+    for (let x of pxs) {
+        x.update();
+        x.wrap();
+        x.display();
+    }
+
     if (strk > 0.93) {
         planet();
     }
     else {
-        //console.log(frameRate().toFixed(2));
         if (frameCount < rotspd || frameCount % rotspd == 0) {
             img.clear();
             for (let cs of cshapes) {
@@ -365,14 +378,45 @@ function planet() {
 
 }
 
+class Pxl {
+    constructor(x, y, c) {
+        this.x = x;
+        this.y = y;
+        this.col = c;
+        this.inc = 0;
+    }
+
+    update() {
+        this.inc += 0.008;
+        let theta = noise(this.x * 0.006, this.y * 0.008, this.inc) * TWO_PI;
+        this.x += 2 * tan(theta);
+        this.y += 2 * sin(theta);
+    }
+
+    display() {
+        if (this.x > 0 && this.x < w && this.y > 0 && this.y < sz && dist(this.x, this.y, w / 2, sz / 2) > w * 0.30) {
+            stroke(this.col);
+            strokeWeight(1);
+            point(this.x, this.y);
+        }
+    }
+
+    wrap() {
+        if (this.x < 0) this.x = w;
+        if (this.x > width) this.x = 0;
+        if (this.y < 0) this.y = sz;
+        if (this.y > height) this.y = 0;
+
+    }
+}
+
 class parti {
-    constructor(nb, col, inc) {
+    constructor(nb, inc) {
         this.nb = nb;
         this.x = random(-width, width);
         this.y = random(-height, height);
         this.z = random(width);
         this.pz = this.z;
-        this.col = col;
         this.inc = inc;
     }
 
