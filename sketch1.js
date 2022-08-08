@@ -84,6 +84,7 @@ let preduc = Math.floor(((0.85 * sz) / 657) * 100) / 100;
 let incirc = (70000 * Math.floor(sz * preduc)) / 1000;
 let mot = false;
 let pxs = [];
+let strcol = ["#0A1B28", "#071F43", "#357D7E", "#35EEEE", "#919DF0"];
 
 function setup() {
 
@@ -95,13 +96,20 @@ function setup() {
 
     let colArr = [];
     let ncols = 10;
+    let c;
+    let rdc = R.random_int(0, 5000);
 
     while (pxs.length < 5000) {
         let x = random(w);
         let y = random(sz);
         if (dist(x, y, w / 2, sz / 2) > w * 0.30) {
             let adj = map(y, 0, sz, 255, 0);
-            let c = color(60, adj, 255);
+            if (pxs.length < rdc) {
+               c = color(60, adj, 255);
+            }
+            else { 
+               c = color(255, adj, 0);
+            }
             pxs.push(new Pxl(x, y, c));
         }
     }
@@ -119,7 +127,7 @@ function setup() {
     }
 
     background(bgcolor);
-
+    console.log(strk);
     if (strk > 0.93) {
         initplanet();
         mot = true;
@@ -264,7 +272,10 @@ class cshape {
         //    img.rotate(-this.ang);
         //}
 
-        if (strk > 0.5) {
+        if (strk > 0.7) {
+            if (floor(this.x / this.sz * this.n) % 2 == 0) { img.blendMode(BLEND); }
+            else { img.blendMode(BURN); }
+        } else if (strk > 0.5) {
             if (floor(this.x / this.sz * this.n) % 2 == 0) { img.blendMode(BURN); }
             else { img.blendMode(BLEND); }
         }
@@ -416,8 +427,10 @@ class parti {
         this.x = random(-width, width);
         this.y = random(-height, height);
         this.z = random(width);
+        this.col = R.random_choice(strcol);
         this.pz = this.z;
         this.inc = inc;
+        this.sdi = 0;
     }
 
     update() {
@@ -431,12 +444,13 @@ class parti {
     }
 
     show() {
-        noStroke();
+        
         var sx = map(this.x / this.z, 0, 1, 0, width);
         var sy = map(this.y / this.z, 0, 1, 0, height);
         var r = map(this.z, 0, width, 12, 0);
+        noStroke();
         fill(255);
-        ellipse(sx, sy, r, r);
+        ellipse(sx, sy, r, r);        
     }
 }
 
