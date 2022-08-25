@@ -86,15 +86,19 @@ let mot = false;
 let pxs = [];
 let t_rd = R.random_int(0, 360);
 let strcol = ["#0A1B28", "#071F43", "#357D7E", "#35EEEE", "#919DF0"];
+let bModes = [];
+let bm1, bm2;
 let yoff = 0.0;
 let yinc = R.random_num(0.01, 0.1);
 let xinc = R.random_dec();
+let pntcur = R.random_dec();
 let xelle = R.random_int(10, 20);
 let img2;
 let H1 = R.random_int(0, 53);
 let H2 = R.random_int(60, 150);
 let H3 = R.random_int(180, 284);
 let Hcols = [H1, H2, H3];
+let cmbPal = true;
 
 function setup() {
 
@@ -105,6 +109,7 @@ function setup() {
     pixelDensity(1);
     centerCanvas();
     ellipseMode(CORNER);
+    bModes = [DIFFERENCE, REMOVE, SCREEN, HARD_LIGHT, BLEND, BURN, LIGHTEST];
 
     let colArr = [];
     let ncols = 10;
@@ -139,8 +144,6 @@ function setup() {
     }
 
     Hcols = shfarr(Hcols);
-
-    console.log(yinc);
 
     background(bgcolor);
     if (strk > 0.93) {
@@ -216,11 +219,18 @@ function makeTl() {
     let n = R.random_int(5, 50);
     const alph = R.random_int(75, 255);
     const rdlrpal = R.random_int(0, colores.length - 1)
-    let npoints = R.random_int(1000, 4000);
+    let npoints = R.random_int(500, 3500);
     let mapP = int(npoints * 0.6);
     let x, y;
 
     if (npoints < 2000) frameRate(25);
+
+    bm1 = R.random_choice(bModes);
+    bm2 = R.random_choice(bModes);
+
+    console.log(bm1 + ' - ' + bm2)
+
+    if ((bm1 == 'screen' && bm2 == 'lighten') || (bm1 == 'lighten' && bm2 == 'screen') || (bm1 == 'color-burn' && bm2 == 'screen') || bm1 == bm2) bm2 = 'source-over';
     
     let fr = 0.32;
     let tp = R.random_choice(steps);
@@ -261,6 +271,17 @@ function makeTl() {
 
 }
 
+function getNewPal() {
+    let pal = [];
+    if (R.random_dec() < 0.5) { pal = R.random_choice(paleta); }
+    else {
+        for (t = 0; t < 10; t++) {
+            pal.push(R.random_choice(paleta)[R.random_int(0, 9)]);
+        }
+    }
+    return pal;
+}
+
 class cshape {
     constructor(x, y, seed, color, size, n, alph, rdlrpal, np) {
         this.x = x;
@@ -274,45 +295,55 @@ class cshape {
         this.alph = alph;
         this.rdlrpal = rdlrpal;
         this.init();
-        this.rnd = 1;
+        this.rnd1;
+        this.rnd2;
+        //this.ndiv = (np < 1000) ? 100 : 200;
+        this.ndiv = (n < np / 2) ? 100 : 200;
+        this.chcol = false;
+        console.log(alph);
     }
 
     show() {
+
+        if (this.chcol) {
+            if (this.n == 0) { palette = getNewPal(); this.rdlrpal = R.random_int(0, colores.length - 1); }
+
+            if (floor(this.x / this.sz * this.n) % 2 == 0) {
+                this.col = lerpColorScheme(curlNoise(this.x * noiseScale, (this.y + 0) * noiseScale, 0), colores[this.rdlrpal], this.alph);
+            } else {
+                this.col = lerpColorScheme(curlNoise(this.x * noiseScale, (this.y + 0) * noiseScale, 0), palette, this.alph);
+            }
+        }
+
+        if (this.np <= 1600) {
+            img.drawingContext.shadowColor = this.col;
+            img.drawingContext.shadowBlur = this.sz * 0.3;
+        }
+
         img.stroke(this.col);
         img.strokeWeight(this.sz);
         img.rotate(radians(this.ang));
 
         if (strk > 0.7) {
-            if (floor(this.x / this.sz * this.n) % 2 == 0) { img.blendMode(BLEND); }
-            else { img.blendMode(BURN); }
-        } else if (strk > 0.5) {
-            if (floor(this.x / this.sz * this.n) % 2 == 0) { img.blendMode(BURN); }
-            else { img.blendMode(BLEND); }
+            if (floor(this.x / this.sz * this.n) % 2 == 0) { img.blendMode(bm1); }
+            else { img.blendMode(bm2); }
+        } else if (strk > 0.4) {
+            if (floor(this.x / this.sz * this.n) % 2 == 0) { img.blendMode(bm2); }
+            else { img.blendMode(bm1); }
         }
 
         customShape(this.x, this.y, this.rseed);
     }
 
     move() {
-        this.ang = frameCount / 100;
-
-        if (floor(this.x / this.sz * this.n) % 2 == 0) {
-            this.color = lerpColorScheme(curlNoise(this.x * noiseScale, (this.y + 0) * noiseScale, 0), colores[this.rdlrpal], this.alph);
-        } else {
-            this.color = lerpColorScheme(curlNoise(this.x * noiseScale, (this.y + 0) * noiseScale, 0), palette, this.alph);
-        }
-
-        this.t += this.step;
-        if (this.t >= 0.2) {
-            this.init();
-        }
+        this.ang = frameCount / this.ndiv;
     }
 
-    init() {
-        this.t = 0;
-        this.rnd = int(random(0, 3));
-        this.step = 1 / 10;
+    changeCol(val) {
+        this.chcol = val;
     }
+
+    init() { }
 }
 
 
@@ -332,7 +363,7 @@ function draw() {
 
     background(bgcolor);
 
-    if (frameCount % 3 == 0)  nbl();
+    if (frameCount % 3 == 0) nbl();
 
     image(img2.get(), 0, 0);
 
@@ -366,6 +397,7 @@ function draw() {
         if (frameCount < rotspd || frameCount % rotspd == 0) {
             img.clear();
             for (let cs of cshapes) {
+                if (frameCount % 10 == 0) { cs.changeCol(true) } else { cs.changeCol(false) };
                 cs.show();
                 cs.move();
             }
@@ -377,20 +409,23 @@ function draw() {
 }
 
 function planet() {
-
+    if (xinc <= 0.7) {
+        img.drawingContext.shadowBlur = 15;
+        img.strokeWeight(5);
+    }
     for (i = ptsch.length; --i;) {
         for (j = ptsch[i].length; --j;) {
             [x, y] = ptsch[i][j];
             if (i % 2 == 0) {
-                x += Math.sin(n = noise(x / Math.floor(w * 0.5), y / Math.floor(w * 0.5)) * TAU)
+                x += Math.sin(n = noise(x / Math.floor(w * pntcur), y / Math.floor(w * pntcur)) * TAU)
                 y += Math.cos(n);
-                if (j % 2 == 0) img.stroke(col1);
-                else img.stroke(col3);
+                if (j % 2 == 0) { img.stroke(col1); img.drawingContext.shadowColor = col1}
+                else { img.stroke(col3); img.drawingContext.shadowColor = col3}
             } else {
-                x -= Math.sin(n = noise(x / Math.floor(w * 0.5), y / Math.floor(w * 0.5)) * TAU)
+                x -= Math.sin(n = noise(x / Math.floor(w * pntcur), y / Math.floor(w * pntcur)) * TAU)
                 y -= Math.cos(n);
-                if (j % 2 == 0) img.stroke(col2);
-                else img.stroke(col3);
+                if (j % 2 == 0) { img.stroke(col2); img.drawingContext.shadowColor = col2}
+                else { img.stroke(col3); img.drawingContext.shadowColor = col3 }
             }
             img.circle(x, y, .3)
             if (pow(k - x, 2) + pow(k - y, 2) < incirc)
@@ -583,7 +618,7 @@ function nW(x, y) {
         img2.push();
         img2.translate(x, y);
         //img2.fill(225, 100, 90, 0.05);
-        img2.fill(Hcols[0], R.random_int(5, 100), R.random_int(5, 100), 0.05);
+        img2.fill(Hcols[0], R.random_int(5, 100), R.random_int(5, 100), R.random_num(0.01, 0.05));
         img2.ellipse(0, 0, i * xelle);
         img2.pop();
     }
@@ -594,7 +629,7 @@ function nW1(x, y) {
         img2.push();
         img2.translate(x, y);
         //img2.fill(100, R.random_int(200, 320), 100, 0.05);
-        img2.fill(Hcols[1], R.random_int(5, 100), R.random_int(5, 100), 0.05);
+        img2.fill(Hcols[1], R.random_int(5, 100), R.random_int(5, 100), R.random_num(0.01, 0.05));
         //fill(31, R.random_int(10, 100), R.random_int(10, 100), 0.05);
         img2.ellipse(0, 0, i * xelle);
         img2.pop();
@@ -607,7 +642,7 @@ function nW2(x, y) {
         img2.translate(x, y);
         //fill(300, 100, 50, 0.09);
         //img2.fill(204, R.random_int(10, 100), R.random_int(10, 100), 0.09);
-        img2.fill(Hcols[2], R.random_int(5, 100), R.random_int(5, 100), 0.09);
+        img2.fill(Hcols[2], R.random_int(5, 100), R.random_int(5, 100), R.random_num(0.05, 0.09));
         img2.ellipse(0, 0, i * xelle);
         img2.pop();
     }
