@@ -84,7 +84,7 @@ let preduc = Math.floor(((0.85 * sz) / 657) * 100) / 100;
 let incirc = (70000 * Math.floor(sz * preduc)) / 1000;
 let mot = false;
 let pxs = [];
-let t_rd = R.random_int(0, 360);
+let t_rd = R.random_num(10000, 53600);
 let strcol = ["#0A1B28", "#071F43", "#357D7E", "#35EEEE", "#919DF0"];
 let bModes = [];
 let bm1, bm2;
@@ -99,6 +99,7 @@ let H2 = R.random_int(60, 150);
 let H3 = R.random_int(180, 284);
 let Hcols = [H1, H2, H3];
 let cmbPal = true;
+let t = 0;
 
 function setup() {
 
@@ -131,12 +132,17 @@ function setup() {
         }
     }
 
-    for (t = 0; t < ncols; t++) {
-        colArr.push(R.random_choice(paleta)[R.random_int(0, 9)]);
+    if (tkid % 3 == 0) {
+        for (t = 0; t < ncols; t++) {
+            colArr.push(R.random_choice(paleta)[R.random_int(0, 9)]);
+        }
+    } else {
+        colArr = R.random_choice(paleta);
     }
 
-    if (tkid % 2 == 0) {colArr = R.random_choice(paleta);}
     palette = colArr;
+
+    console.log(t_rd + ' - ' + palette.toString());
 
     star = new Star(100, 100);
     for (z = 0; z < 1200; z++) {
@@ -146,7 +152,7 @@ function setup() {
     Hcols = shfarr(Hcols);
 
     background(bgcolor);
-    if (strk > 0.93) {
+    if (strk > 0.95) {
         initplanet();
         mot = true;
     }
@@ -230,7 +236,7 @@ function makeTl() {
 
     console.log(bm1 + ' - ' + bm2)
 
-    if ((bm1 == 'screen' && bm2 == 'lighten') || (bm1 == 'lighten' && bm2 == 'screen') || (bm1 == 'color-burn' && bm2 == 'screen') || bm1 == bm2) bm2 = 'source-over';
+    if ((bm1 == 'screen' && bm2 == 'lighten') || (bm1 == 'lighten' && bm2 == 'screen') || (bm1 == 'color-burn' && bm2 == 'screen') || (bm1 == 'screen' && bm2 == 'color-burn') || (bm1 == 'hard-light' && bm2 == 'screen') || bm1 == bm2) bm2 = 'source-over';
     
     let fr = 0.32;
     let tp = R.random_choice(steps);
@@ -256,7 +262,7 @@ function makeTl() {
         y = rd2 * R.random_num(-d, d) / t;
 
         if (floor(x / sz * n) % 2 == 0) {
-            color = lerpColorScheme(curlNoise(x * noiseScale, (y + 0) * noiseScale, 0), colores[rdlrpal], alph);
+            color = lerpColorScheme(curlNoise(x * noiseScale, (y + 0) * noiseScale, 0), palette.reverse(), alph);
         } else {
             color = lerpColorScheme(curlNoise(x * noiseScale, (y + 0) * noiseScale, 0), palette, alph);
         }
@@ -300,7 +306,6 @@ class cshape {
         //this.ndiv = (np < 1000) ? 100 : 200;
         this.ndiv = (n < np / 2) ? 100 : 200;
         this.chcol = false;
-        console.log(alph);
     }
 
     show() {
@@ -309,13 +314,13 @@ class cshape {
             if (this.n == 0) { palette = getNewPal(); this.rdlrpal = R.random_int(0, colores.length - 1); }
 
             if (floor(this.x / this.sz * this.n) % 2 == 0) {
-                this.col = lerpColorScheme(curlNoise(this.x * noiseScale, (this.y + 0) * noiseScale, 0), colores[this.rdlrpal], this.alph);
+                this.col = lerpColorScheme(curlNoise(this.x * noiseScale, (this.y + 0) * noiseScale, 0), palette.reverse(), this.alph); //colores[this.rdlrpal]
             } else {
                 this.col = lerpColorScheme(curlNoise(this.x * noiseScale, (this.y + 0) * noiseScale, 0), palette, this.alph);
             }
         }
 
-        if (this.np <= 1600) {
+        if (this.np <= 2000) {
             img.drawingContext.shadowColor = this.col;
             img.drawingContext.shadowBlur = this.sz * 0.3;
         }
@@ -390,7 +395,7 @@ function draw() {
         x.display();
     }
 
-    if (strk > 0.93) {
+    if (strk > 0.95) {
         planet();
     }
     else {
@@ -497,7 +502,6 @@ class parti {
         var r = map(this.z, 0, width, 12, 0);
         drawingContext.shadowColor = color(255);
         drawingContext.shadowBlur = r * 1.5;
-        //noStroke();
         stroke(0);
         strokeWeight(r * 0.05);
         fill(255);
@@ -617,8 +621,7 @@ function nW(x, y) {
     for (let i = 0; i < 15; i++) {
         img2.push();
         img2.translate(x, y);
-        //img2.fill(225, 100, 90, 0.05);
-        img2.fill(Hcols[0], R.random_int(5, 100), R.random_int(5, 100), R.random_num(0.01, 0.05));
+        img2.fill(Hcols[0], R.random_int(5, 100), R.random_int(5, 100), R.random_num(0.0001, 0.03));
         img2.ellipse(0, 0, i * xelle);
         img2.pop();
     }
@@ -628,9 +631,7 @@ function nW1(x, y) {
     for (let i = 0; i < 15; i++) {
         img2.push();
         img2.translate(x, y);
-        //img2.fill(100, R.random_int(200, 320), 100, 0.05);
-        img2.fill(Hcols[1], R.random_int(5, 100), R.random_int(5, 100), R.random_num(0.01, 0.05));
-        //fill(31, R.random_int(10, 100), R.random_int(10, 100), 0.05);
+        img2.fill(Hcols[1], R.random_int(5, 100), R.random_int(5, 100), R.random_num(0.0001, 0.03));
         img2.ellipse(0, 0, i * xelle);
         img2.pop();
     }
@@ -640,9 +641,7 @@ function nW2(x, y) {
     for (let i = 0; i < 15; i++) {
         img2.push();
         img2.translate(x, y);
-        //fill(300, 100, 50, 0.09);
-        //img2.fill(204, R.random_int(10, 100), R.random_int(10, 100), 0.09);
-        img2.fill(Hcols[2], R.random_int(5, 100), R.random_int(5, 100), R.random_num(0.05, 0.09));
+        img2.fill(Hcols[2], R.random_int(5, 100), R.random_int(5, 100), R.random_num(0.0001, 0.03));
         img2.ellipse(0, 0, i * xelle);
         img2.pop();
     }
