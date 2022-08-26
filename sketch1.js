@@ -132,7 +132,7 @@ function setup() {
         }
     }
 
-    if (tkid % 3 == 0) {
+    if (strk > 0.5) {
         for (t = 0; t < ncols; t++) {
             colArr.push(R.random_choice(paleta)[R.random_int(0, 9)]);
         }
@@ -142,7 +142,7 @@ function setup() {
 
     palette = colArr;
 
-    console.log(t_rd + ' - ' + palette.toString());
+    console.log(strk + ' - ' + palette.toString());
 
     star = new Star(100, 100);
     for (z = 0; z < 1200; z++) {
@@ -353,7 +353,7 @@ class cshape {
 
 
 function customShape(ox, oy, seed) {
-    if (strk > 0.7) { t = t_rd }
+    if (strk > 0.8) { t = t_rd }
     img.beginShape();
     for (let i = 0; i < 15; i++) {
         t += seed;
