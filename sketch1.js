@@ -64,12 +64,12 @@ let palette;
 let tokenHash = fxhash;
 let seed = Math.abs(hashes[0]);
 let noiseScale = 9e-11;
-let bgcolor = '#000000', bgstk = '#ffffff';
+let bgcolor = '#000000';
 let R = new Random(seed);
 let tkid = R.random_int(0, 999);
 let sb = R.random_int(30, 50);
 let strk = R.random_dec();
-let _palette, _painting;
+let _palette
 let cshapes = [];
 let rotspd = 7;
 let star;
@@ -353,7 +353,7 @@ class cshape {
 
 
 function customShape(ox, oy, seed) {
-    if (strk > 0.75) { t = t_rd }
+    if (strk > 0.7) { t = t_rd }
     img.beginShape();
     for (let i = 0; i < 15; i++) {
         t += seed;
