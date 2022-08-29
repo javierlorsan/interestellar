@@ -89,6 +89,7 @@ let strcol = ["#0A1B28", "#071F43", "#357D7E", "#35EEEE", "#919DF0"];
 let bModes = [];
 let bm1, bm2;
 let yoff = 0.0;
+let sdbl = R.random_num(0.3, 0.7);
 let yinc = R.random_num(0.01, 0.1);
 let xinc = R.random_dec();
 let pntcur = R.random_dec();
@@ -138,6 +139,7 @@ function setup() {
         }
     } else {
         colArr = R.random_choice(paleta);
+        console.log(paleta.indexOf(colArr));
     }
 
     palette = colArr;
@@ -322,7 +324,7 @@ class cshape {
 
         if (this.np <= 2000) {
             img.drawingContext.shadowColor = this.col;
-            img.drawingContext.shadowBlur = this.sz * 0.3;
+            img.drawingContext.shadowBlur = this.sz * sdbl;
         }
 
         img.stroke(this.col);
@@ -396,7 +398,7 @@ function draw() {
     }
 
     if (strk > 0.95) {
-        if (strk > 0.97) {
+        if (xinc <= 0.7) {
             if (frameCount % 60 == 0)
                 col2 = R.random_choice(paleta)[R.random_int(0, 9)];
         }
