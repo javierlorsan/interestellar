@@ -132,7 +132,7 @@ function setup() {
         }
     }
 
-    if (strk > 0.5) {
+    if (strk >= 0.45) {
         for (t = 0; t < ncols; t++) {
             colArr.push(R.random_choice(paleta)[R.random_int(0, 9)]);
         }
@@ -332,7 +332,7 @@ class cshape {
         if (strk > 0.7) {
             if (floor(this.x / this.sz * this.n) % 2 == 0) { img.blendMode(bm1); }
             else { img.blendMode(bm2); }
-        } else if (strk > 0.4) {
+        } else if (strk >= 0.5) {
             if (floor(this.x / this.sz * this.n) % 2 == 0) { img.blendMode(bm2); }
             else { img.blendMode(bm1); }
         }
@@ -353,7 +353,7 @@ class cshape {
 
 
 function customShape(ox, oy, seed) {
-    if (strk > 0.8) { t = t_rd }
+    if (strk > 0.75) { t = t_rd }
     img.beginShape();
     for (let i = 0; i < 15; i++) {
         t += seed;
@@ -596,16 +596,20 @@ function nbl() {
     img2.background(255, 0, 0, 0.1);
     img2.noStroke();
 
-    for (x = 0; x < w + d; x += d) {
-        let ny = map(noise(xoff, yoff), 0, 1, -200, 550);
-        nW(x, ny);
-        xoff += xinc;
+    if (strk < 0.33) {
+        for (x = 0; x < w + d; x += d) {
+            let ny = map(noise(xoff, yoff), 0, 1, -200, 550);
+            nW(x, ny);
+            xoff += xinc;
+        }
     }
 
-    for (x = 0; x < w + d; x += d) {
-        let ny = map(noise(xoff, yoff), 0, 1, 0, 650);
-        nW1(x, ny);
-        xoff += xinc;
+    if (strk >= 0.33 && strk < 0.66) {
+        for (x = 0; x < w + d; x += d) {
+            let ny = map(noise(xoff, yoff), 0, 1, 0, 650);
+            nW1(x, ny);
+            xoff += xinc;
+        }
     }
 
     for (x = 0; x < w + d; x += d) {
