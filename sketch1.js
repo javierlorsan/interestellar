@@ -231,7 +231,7 @@ function makeTl() {
     let mapP = int(npoints * 0.6);
     let x, y;
 
-    if (npoints < 2000) frameRate(25);
+    if (npoints <= 2000) rotspd=2;
 
     bm1 = R.random_choice(bModes);
     bm2 = R.random_choice(bModes);
