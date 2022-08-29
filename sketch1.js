@@ -120,7 +120,7 @@ function setup() {
     while (pxs.length < 5000) {
         let x = random(w);
         let y = random(sz);
-        if (dist(x, y, w / 2, sz / 2) > w * 0.30) {
+        if (dist(x, y, w / 2, sz / 2) > w * 0.1) {
             let adj = map(y, 0, sz, 255, 0);
             if (pxs.length < rdc) {
                c = color(60, adj, 255);
@@ -165,7 +165,7 @@ function shfarr(a) { for (var j, i = a.length - 1; i > 0; i--) { j = Math.floor(
 function initplanet() {
 
     col1 = R.random_choice(colores)[R.random_int(0, 4)];
-    col2 = R.random_choice(colores)[R.random_int(0, 4)];
+    col2 = R.random_choice(paleta)[R.random_int(0, 9)];
     col3 = R.random_choice(paleta)[R.random_int(0, 9)];
 
     pts = (Array(k).fill(0)).map(rd_point)
@@ -368,7 +368,7 @@ function draw() {
 
     background(bgcolor);
 
-    if (frameCount % 3 == 0) nbl();
+    if (frameCount % 4 == 0) nbl();
 
     image(img2.get(), 0, 0);
 
@@ -396,6 +396,10 @@ function draw() {
     }
 
     if (strk > 0.95) {
+        if (strk > 0.97) {
+            if (frameCount % 60 == 0)
+                col2 = R.random_choice(paleta)[R.random_int(0, 9)];
+        }
         planet();
     }
     else {
