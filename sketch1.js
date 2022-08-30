@@ -408,7 +408,7 @@ function draw() {
         if (frameCount < rotspd || frameCount % rotspd == 0) {
             img.clear();
             for (let cs of cshapes) {
-                if (frameCount % 10 == 0) { cs.changeCol(true) } else { cs.changeCol(false) };
+                if (frameCount % 15 == 0) { cs.changeCol(true) } else { cs.changeCol(false) };
                 cs.show();
                 cs.move();
             }
