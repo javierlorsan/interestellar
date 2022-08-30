@@ -94,6 +94,7 @@ let yinc = R.random_num(0.01, 0.1);
 let xinc = R.random_dec();
 let pntcur = R.random_dec();
 let xelle = R.random_int(10, 20);
+let nrot = R.random_int(2, 10);
 let img2;
 let H1 = R.random_int(0, 53);
 let H2 = R.random_int(60, 150);
@@ -144,7 +145,7 @@ function setup() {
 
     palette = colArr;
 
-    console.log(strk + ' - ' + xinc + ' - ' + palette.toString());
+    console.log(nrot + ' - ' + xinc + ' - ' + palette.toString());
 
     star = new Star(100, 100);
     for (z = 0; z < 1200; z++) {
@@ -356,7 +357,7 @@ class cshape {
 
 function customShape(ox, oy, seed) {
     if (strk > 0.7) { t = t_rd }
-    if (xinc > 0.5) { img.rotate(PI / 2); }
+    if (xinc > 0.3) { img.rotate(PI / nrot); }
     img.beginShape();
     for (let i = 0; i < 15; i++) {
         t += seed;
