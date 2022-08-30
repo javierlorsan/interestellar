@@ -89,7 +89,7 @@ let strcol = ["#0A1B28", "#071F43", "#357D7E", "#35EEEE", "#919DF0"];
 let bModes = [];
 let bm1, bm2;
 let yoff = 0.0;
-let sdbl = R.random_num(0.3, 0.5);
+let sdbl = R.random_num(0.2, 0.5);
 let yinc = R.random_num(0.01, 0.1);
 let xinc = R.random_dec();
 let pntcur = R.random_dec();
@@ -144,7 +144,7 @@ function setup() {
 
     palette = colArr;
 
-    console.log(strk + ' - ' + palette.toString());
+    console.log(strk + ' - ' + xinc + ' - ' + palette.toString());
 
     star = new Star(100, 100);
     for (z = 0; z < 1200; z++) {
@@ -356,6 +356,7 @@ class cshape {
 
 function customShape(ox, oy, seed) {
     if (strk > 0.7) { t = t_rd }
+    if (xinc > 0.5) { img.rotate(PI / 2); }
     img.beginShape();
     for (let i = 0; i < 15; i++) {
         t += seed;
