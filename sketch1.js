@@ -134,18 +134,17 @@ function setup() {
         }
     }
 
-    if (strk >= 0.45) {
+    if (strk >= 0.5) {
         for (t = 0; t < ncols; t++) {
             colArr.push(R.random_choice(paleta)[R.random_int(0, 9)]);
         }
     } else {
         colArr = R.random_choice(paleta);
-        console.log(paleta.indexOf(colArr));
     }
 
     palette = colArr;
 
-    console.log(nrot + ' - ' + xinc + ' - ' + palette.toString());
+    //console.log(nrot + ' - ' + xinc + ' - ' + palette.toString());
 
     star = new Star(100, 100);
     for (z = 0; z < 1200; z++) {
@@ -357,7 +356,7 @@ class cshape {
 
 function customShape(ox, oy, seed) {
     if (strk > 0.7) { t = t_rd }
-    if (xinc > 0.3) { img.rotate(PI / nrot); }
+    if (xinc > 0.35) { img.rotate(PI / nrot); }
     img.beginShape();
     for (let i = 0; i < 15; i++) {
         t += seed;
