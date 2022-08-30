@@ -89,7 +89,7 @@ let strcol = ["#0A1B28", "#071F43", "#357D7E", "#35EEEE", "#919DF0"];
 let bModes = [];
 let bm1, bm2;
 let yoff = 0.0;
-let sdbl = R.random_num(0.3, 0.7);
+let sdbl = R.random_num(0.3, 0.5);
 let yinc = R.random_num(0.01, 0.1);
 let xinc = R.random_dec();
 let pntcur = R.random_dec();
@@ -231,7 +231,7 @@ function makeTl() {
     let mapP = int(npoints * 0.6);
     let x, y;
 
-    if (npoints <= 2000) rotspd=2;
+    if (npoints <= 2000) rotspd=1;
 
     bm1 = R.random_choice(bModes);
     bm2 = R.random_choice(bModes);
