@@ -231,7 +231,7 @@ function makeTl() {
     let mapP = int(npoints * 0.6);
     let x, y;
 
-    if (npoints <= 2000) rotspd=1;
+    if (npoints <= 1800) rotspd=1;
 
     bm1 = R.random_choice(bModes);
     bm2 = R.random_choice(bModes);
@@ -327,7 +327,7 @@ class cshape {
             }
         }
 
-        if (this.np <= 2000) {
+        if (this.np <= 1800) {
             img.drawingContext.shadowColor = this.col;
             img.drawingContext.shadowBlur = this.sz * sdbl;
         }
