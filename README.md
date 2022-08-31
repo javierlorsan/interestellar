@@ -1,7 +1,9 @@
 # interestellar
 A journey through the universe 
 
-Interstellar is a journey through the universe observing far away stars, planets and singularities such as black holes, originating from the cold remains of ancient stars, they are so dense that no material particle, not even light, is capable of escaping their powerful gravitational force.
+Interstellar is a journey through the universe observing far away stars, planets and singularities such as black holes. Some of them can be stereoscopic and others can give a three-dimensional feeling. Sometimes the journey can be slower due to the strong gravitational pull of some black holes. Go now into deep space.
+
+Black holes are originating from the cold remains of ancient stars, they are so dense that no material particle, not even light, is capable of escaping their powerful gravitational force.
 
 What color are black holes?
 
@@ -13,4 +15,4 @@ I have always been fascinated by these singularities, especially, because inside
 
 “The Universe is written in a mathematical code” Galileo.
 
-Just press "s" key or mouse click and enjoy the journey watching stars, planets forming and black holes rotating and changing shape. You can pause the journey when ever you want pressing "space bar" or mouse click and press "s" or mouse click again to continue.
+Just press “s” key or mouse click and enjoy the journey watching stars, planets forming and black holes rotating and changing shape. You can pause the journey when ever you want pressing “space bar” or mouse click and press “s” or mouse click again to continue (Sometimes the journey can take a few seconds to start).
