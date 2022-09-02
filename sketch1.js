@@ -227,7 +227,7 @@ function makeTl() {
 
     img.noiseSeed(floor(R.random_num(0, 10e6)));
     let n = R.random_int(5, 50);
-    const alph = R.random_int(75, 255);
+    let alph = R.random_int(75, 255);
     let npoints = R.random_int(500, 3500);
     let mapP = int(npoints * 0.6);
     let x, y;
@@ -313,12 +313,14 @@ class cshape {
         this.rnd2;
         this.ndiv = (n < np / 2) ? 100 : 200;
         this.chcol = false;
+        this.sdbl = 0.3;
+        this.incdes = 'des'
     }
 
     show() {
 
         if (this.chcol) {
-            if (this.n == 0) { palette = getNewPal(); }
+            if (this.n == 0) { palette = getNewPal();}
             if (floor(this.x / this.sz * this.n) % 2 == 0) {
                 this.col = lerpColorScheme(curlNoise(this.x * noiseScale, (this.y + 0) * noiseScale, 0), palette.reverse(), this.alph); //colores[this.rdlrpal]
             } else {
@@ -328,7 +330,17 @@ class cshape {
 
         if (this.np <= 1800) {
             img.drawingContext.shadowColor = this.col;
-            img.drawingContext.shadowBlur = this.sz * 0.3; // sdbl;
+            img.drawingContext.shadowBlur = this.sz * this.sdbl;
+
+            if (this.incdes == 'des') { this.sdbl -= 0.01;
+            } else { this.sdbl += 0.01 }
+
+            if (this.sdbl >= 0.3) this.incdes = 'des'
+            if (this.sdbl <= -0.5) this.incdes = 'inc'
+
+
+            //console.log(this.sdbl + ' - ' + this.incdes);
+
         }
 
         img.stroke(this.col);
@@ -344,6 +356,7 @@ class cshape {
         }
 
         customShape(this.x, this.y, this.rseed);
+
     }
 
     move() {
