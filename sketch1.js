@@ -314,6 +314,7 @@ class cshape {
         this.ndiv = (n < np / 2) ? 100 : 200;
         this.chcol = false;
         this.sdbl = 0.3;
+        this.sdbl2 = 0.01;
         this.incdes = 'des'
     }
 
@@ -332,15 +333,22 @@ class cshape {
             img.drawingContext.shadowColor = this.col;
             img.drawingContext.shadowBlur = this.sz * this.sdbl;
 
-            if (this.incdes == 'des') { this.sdbl -= 0.01;
+            if (this.incdes == 'des') {
+            this.sdbl -= 0.01;
             } else { this.sdbl += 0.01 }
 
             if (this.sdbl >= 0.3) this.incdes = 'des'
             if (this.sdbl <= -0.5) this.incdes = 'inc'
+        } else {
+            img.drawingContext.shadowColor = this.col;
+            img.drawingContext.shadowBlur = this.sz * this.sdbl2;
 
+            if (this.incdes == 'des') {
+                this.sdbl2 -= 0.01;
+            } else { this.sdbl2 += 0.01 }
 
-            //console.log(this.sdbl + ' - ' + this.incdes);
-
+            if (this.sdbl2 >= 0.2) this.incdes = 'des'
+            if (this.sdbl2 <= -0.2) this.incdes = 'inc'
         }
 
         img.stroke(this.col);
