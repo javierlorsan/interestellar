@@ -314,7 +314,7 @@ class cshape {
         this.ndiv = (n < np / 2) ? 100 : 200;
         this.chcol = false;
         this.sdbl = 0.3;
-        this.sdbl2 = 0.01;
+        this.sdbl2 = 0;
         this.incdes = 'des'
     }
 
