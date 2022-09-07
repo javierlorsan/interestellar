@@ -91,7 +91,7 @@ let strcol = ["#0A1B28", "#071F43", "#357D7E", "#35EEEE", "#919DF0"];
 let bModes = [];
 let bm1, bm2;
 let yoff = 0.0;
-let sdbl = R.random_choice([0.2, 0.3, 0.4]);
+let sdbl = R.random_choice([0.1, 0.2, 0.3, 0.4]);
 let yinc = R.random_num(0.01, 0.1);
 let xinc = R.random_dec();
 let pntcur = R.random_dec();
@@ -160,7 +160,7 @@ function setup() {
         initplanet();
         mot = true;
     }
-    else { noLoop(); makeTl(); }
+    else { noLoop(); makeTl();}
 } 
 
 function shfarr(a) { for (var j, i = a.length - 1; i > 0; i--) { j = Math.floor(R.random_dec() * (i + 1));[a[i], a[j]] = [a[j], a[i]] } return a; }
@@ -332,10 +332,8 @@ class cshape {
         if (this.np <= 1800) {
             img.drawingContext.shadowColor = this.col;
             img.drawingContext.shadowBlur = this.sz * this.sdbl;
-            
-            if (this.incdes == 'des') {
-            this.sdbl -= 0.01;
-            } else { this.sdbl += 0.01 }
+            console.log(this.sz * this.sdbl)
+            if (this.incdes == 'des') {this.sdbl -= 0.01; } else { this.sdbl += 0.01 }
 
             if (this.sdbl >= 0.3) this.incdes = 'des'
             if (this.sdbl <= -0.5) this.incdes = 'inc'
@@ -343,9 +341,7 @@ class cshape {
             img.drawingContext.shadowColor = this.col;
             img.drawingContext.shadowBlur = this.sz * this.sdbl2;
 
-            if (this.incdes == 'des') {
-                this.sdbl2 -= 0.01;
-            } else { this.sdbl2 += 0.01 }
+            if (this.incdes == 'des') {this.sdbl2 -= 0.01;} else { this.sdbl2 += 0.01 }
 
             if (this.sdbl2 >= 0.25) this.incdes = 'des'
             if (this.sdbl2 <= -0.25) this.incdes = 'inc'
