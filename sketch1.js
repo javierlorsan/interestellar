@@ -251,7 +251,7 @@ function makeTl() {
 
     //tp = 31.428999999999717; 
     //fr = 0.85
-    console.log(npoints);
+    //console.log(npoints);
     
 
     let radius = sz * 0.00;
@@ -336,7 +336,7 @@ class cshape {
 
             if (this.sdbl >= 0.3) this.incdes = 'des'
             if (this.sdbl <= -0.4) this.incdes = 'inc'
-        } else {
+        } else if (this.np < 2800) {
             img.drawingContext.shadowColor = this.col;
             img.drawingContext.shadowBlur = this.sz * this.sdbl2;
 
