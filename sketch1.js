@@ -91,7 +91,7 @@ let strcol = ["#0A1B28", "#071F43", "#357D7E", "#35EEEE", "#919DF0"];
 let bModes = [];
 let bm1, bm2;
 let yoff = 0.0;
-let sdbl = R.random_choice([0.3, 0.4, 0.5]);
+let sdbl = R.random_choice([0.2, 0.3, 0.4]);
 let yinc = R.random_num(0.01, 0.1);
 let xinc = R.random_dec();
 let pntcur = R.random_dec();
@@ -313,7 +313,7 @@ class cshape {
         this.rnd2;
         this.ndiv = (n < np / 2) ? 100 : 200;
         this.chcol = false;
-        this.sdbl = 0.3;
+        this.sdbl = sdbl;
         this.sdbl2 = 0;
         this.incdes = 'des'
     }
