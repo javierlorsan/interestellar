@@ -91,7 +91,7 @@ let strcol = ["#0A1B28", "#071F43", "#357D7E", "#35EEEE", "#919DF0"];
 let bModes = [];
 let bm1, bm2;
 let yoff = 0.0;
-let sdbl = R.random_choice([-0.3, -0.2, 0.2, 0.3, 0.4]);
+let sdbl = R.random_choice([0.2, 0.3, 0.4]);
 let yinc = R.random_num(0.01, 0.1);
 let xinc = R.random_dec();
 let pntcur = R.random_dec();
@@ -251,7 +251,7 @@ function makeTl() {
 
     //tp = 31.428999999999717; 
     //fr = 0.85
-    console.log(tp + ' - ' + fr);
+    console.log(npoints);
     
 
     let radius = sz * 0.00;
@@ -313,7 +313,7 @@ class cshape {
         this.rnd2;
         this.ndiv = (n < np / 2) ? 100 : 200;
         this.chcol = false;
-        this.sdbl = sdbl;
+        this.sdbl = -0.3; // sdbl;
         this.sdbl2 = 0;
         this.incdes = 'des'
     }
@@ -328,11 +328,11 @@ class cshape {
                 this.col = lerpColorScheme(curlNoise(this.x * noiseScale, (this.y + 0) * noiseScale, 0), palette, this.alph);
             }
         }
-
+        
         if (this.np <= 1800) {
             img.drawingContext.shadowColor = this.col;
             img.drawingContext.shadowBlur = this.sz * this.sdbl;
-
+            
             if (this.incdes == 'des') {
             this.sdbl -= 0.01;
             } else { this.sdbl += 0.01 }
