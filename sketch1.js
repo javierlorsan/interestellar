@@ -332,7 +332,6 @@ class cshape {
         if (this.np <= 1800) {
             img.drawingContext.shadowColor = this.col;
             img.drawingContext.shadowBlur = this.sz * this.sdbl;
-            console.log(this.sz * this.sdbl)
             if (this.incdes == 'des') {this.sdbl -= 0.01; } else { this.sdbl += 0.01 }
 
             if (this.sdbl >= 0.3) this.incdes = 'des'
