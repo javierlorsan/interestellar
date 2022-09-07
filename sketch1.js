@@ -336,7 +336,7 @@ class cshape {
             if (this.incdes == 'des') {this.sdbl -= 0.01; } else { this.sdbl += 0.01 }
 
             if (this.sdbl >= 0.3) this.incdes = 'des'
-            if (this.sdbl <= -0.5) this.incdes = 'inc'
+            if (this.sdbl <= -0.4) this.incdes = 'inc'
         } else {
             img.drawingContext.shadowColor = this.col;
             img.drawingContext.shadowBlur = this.sz * this.sdbl2;
