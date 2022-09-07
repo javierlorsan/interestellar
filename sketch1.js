@@ -347,8 +347,8 @@ class cshape {
                 this.sdbl2 -= 0.01;
             } else { this.sdbl2 += 0.01 }
 
-            if (this.sdbl2 >= 0.3) this.incdes = 'des'
-            if (this.sdbl2 <= -0.3) this.incdes = 'inc'
+            if (this.sdbl2 >= 0.25) this.incdes = 'des'
+            if (this.sdbl2 <= -0.25) this.incdes = 'inc'
         }
 
         img.stroke(this.col);
