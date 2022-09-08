@@ -228,7 +228,7 @@ function makeTl() {
     img.noiseSeed(floor(R.random_num(0, 10e6)));
     let n = R.random_int(5, 50);
     let alph = R.random_int(75, 255);
-    let npoints = R.random_int(500, 3500);
+    let npoints = R.random_int(500, 3200);
     let mapP = int(npoints * 0.6);
     let x, y;
 
