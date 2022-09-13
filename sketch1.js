@@ -104,6 +104,8 @@ let H3 = R.random_int(180, 284);
 let Hcols = [H1, H2, H3];
 let cmbPal = true;
 let t = 0;
+let rdpt = R.random_dec();
+let spmode = '';
 
 function setup() {
 
@@ -225,19 +227,31 @@ function mouseClicked() {
 
 function makeTl() {
 
+    //let npoints = 150;
+    //rdpt = 0.4
+    //spmode = R.random_choice([TRIANGLES, TRIANGLE_STRIP, QUADS]); //LINES, 
+    if (rdpt <= 0.5) {
+        npoints = 150;
+        spmode = R.random_choice([TRIANGLES, TRIANGLE_STRIP, QUADS])
+    } else {
+        npoints = R.random_int(500, 3200);
+    }
+
     img.noiseSeed(floor(R.random_num(0, 10e6)));
     let n = R.random_int(5, 50);
-    let alph = R.random_int(75, 255);
-    let npoints = R.random_int(500, 3200);
+    let alph = R.random_int(75, 255); 
     let mapP = int(npoints * 0.6);
     let x, y;
-
+    let mg = ['-5.655-4','0.7-4','-3.3-5','14.9-5','10.087999999999957-5','2.6-5','28.818999999999537-5','10.22899999999993-5','-5.55-4','11.39699999999987-4','-5.55-5','8.4-5','32.078999999999645-5','11.461999999999835-5','-7.4-5','17.75004-4','6.9-4', '17.75000000000018-4', '11.979999999999995-5','0.6-4', '0.6-5', '15-5', '-180-5', '11.979999999999995-4', '10.755555-5', '16.419999999999973-5', '-7.35553-5', '-10.45-5', '-7.35551-5', '29.30399999999944-5', '11.461999999999835-4', '1.8-5', '0.5-5', '-8.4-5', '-5.655-5', '10.420999999999824-5', '17.75000000000018-5', '16.7-5', '7.4-5', '7.4-4', '32.078999999999645-4', '33.56400000000022-5', '30.26399999999995-4', '0.7-5', '1.6-5', '6.9-5', '1.1-4', '18.1-4', '18.1-5', '11.3669-5', '11.366999999999887-5', '11.366999999999887-44', '5.1-5', '5.1-4', '11.9-4', '11.9-5', '11.39699999999987-5', '-6.5555-q', '18.570000000000075-q', '18.879-5']
+    let gr = ['17.75004-5','10.082975-5','10.08299999999996-5','30.2639-4', '1.2-4', '11.3669-4','1.3-4','1.3-5','-1.3-5','1.2-5','-1.3-4','11.366999999999887-4','14.2-4', '30.2639-5','10.471999999999795-5','-5.55-q','-7.4-4','0.7-q','32.078999999999645-q','6.9-q','30.26399999999995-5','1.1-5','26.179999999999435-4','-7.35551-4','-7.35553-4', '26.17994-5','10.244999999999921-5', '14.2-5', '30.15899999999997-5', '30.15899999999997-4', '14.28-5', '14.28-4', '0.2-5', '11.9-q', '18.1-q', '14.279999999999946-4', '14.279999999999946-5', '5.55-q']
+    let pe = ['18.710000000000097-4','-9.355-q','11.204999999999977-q', '18.7-q', '-9.352-q', '18.710000000000097-q', '-9.351-q,10.22899999999993-4', '0.9-q', '30.36899999999993-q'];
+    let mp = ['18.7-4','25.219-4','25.215-q','-3.3-q','25.219-5','-9.351-q','25.247-q','0.1-4', '0.1-5', '0.1-q', '25.247-4', '25.247-5', '25.219-q', '25.215-5', '25.215-4', '-3.3-4', '26.528999999999993-q', '11.20497-q', '13.919999999999954-q', '11.519999999999802-q', '30.36899999999993-q'];
     if (npoints <= 1800) rotspd=1;
 
     bm1 = R.random_choice(bModes);
     bm2 = R.random_choice(bModes);
 
-    console.log(bm1 + ' - ' + bm2)
+    //console.log(bm1 + ' - ' + bm2)
 
     if ((bm1 == 'screen' && bm2 == 'lighten') || (bm1 == 'lighten' && bm2 == 'screen') || (bm1 == 'color-burn' && bm2 == 'screen') || (bm1 == 'screen' && bm2 == 'color-burn') || (bm1 == 'hard-light' && bm2 == 'screen') || bm1 == bm2) bm2 = 'source-over';
     
@@ -247,11 +261,47 @@ function makeTl() {
     else if (shp.indexOf(tp) != -1) { fr = 0.54; }
     else if (shmp.indexOf(tp) != -1) {
         if (xinc < 0.5) { fr = 0.72 } else { fr = 0.85; } }
-    else if (shmg.indexOf(tp) != -1) { fr = 0.2; }
+    else if (shmg.indexOf(tp) != -1) { fr = 0.2; } 
 
-    //tp = 31.428999999999717; 
-    //fr = 0.85
-    //console.log(npoints);
+    let tpmd = tp.toString() + '-' + spmode.toString().substring(0, 1);
+
+    if (npoints < 200) {
+        mapP = int(npoints * 0.3);
+        if (shg.indexOf(tp) != -1) {
+            if (mg.indexOf(tpmd) != -1) { fr = 0.15; }
+            if (pe.indexOf(tpmd) != -1) { fr = 0.5; }
+            if (mp.indexOf(tpmd) != -1) { fr = 0.65; }
+            if (gr.indexOf(tpmd) != -1) { fr = 0.25; }
+        }
+        if (shm.indexOf(tp) != -1) {
+            if (mg.indexOf(tpmd) != -1) { fr = 0.17; }
+            if (pe.indexOf(tpmd) != -1) { fr = 0.6; }
+            if (mp.indexOf(tpmd) != -1) { fr = 0.7; }
+            if (gr.indexOf(tpmd) != -1) { fr = 0.28; }
+        }
+        if (shp.indexOf(tp) != -1) {
+            if (mg.indexOf(tpmd) != -1) { fr = 0.16; }
+            if (pe.indexOf(tpmd) != -1) { fr = 0.65; }
+            if (mp.indexOf(tpmd) != -1) { fr = 0.75; }
+            if (gr.indexOf(tpmd) != -1) { fr = 0.28; }
+        }
+        if (shmp.indexOf(tp) != -1) {
+            if (mg.indexOf(tpmd) != -1) { fr = 0.2; }
+            if (pe.indexOf(tpmd) != -1) { fr = 0.65; }
+            if (mp.indexOf(tpmd) != -1) { fr = 0.75; }
+            if (gr.indexOf(tpmd) != -1) { fr = 0.38; }
+        }
+        if (shmg.indexOf(tp) != -1) {
+            if (mg.indexOf(tpmd) != -1) { fr = 0.13; }
+            if (pe.indexOf(tpmd) != -1) { fr = 0.45; }
+            if (mp.indexOf(tpmd) != -1) { fr = 0.55; }
+            if (gr.indexOf(tpmd) != -1) { fr = 0.18; }
+        }
+    }
+
+    
+    //fr = 0.3
+    console.log(rdpt + ' - ' + tpmd + ' - ' + fr);
     
 
     let radius = sz * 0.00;
@@ -350,12 +400,14 @@ class cshape {
         img.strokeWeight(this.sz);
         img.rotate(radians(this.ang));
 
-        if (strk > 0.7) {
-            if (floor(this.x / this.sz * this.n) % 2 == 0) { img.blendMode(bm1); }
-            else { img.blendMode(bm2); }
-        } else if (strk >= 0.5) {
-            if (floor(this.x / this.sz * this.n) % 2 == 0) { img.blendMode(bm2); }
-            else { img.blendMode(bm1); }
+        if (this.np > 200) {
+            if (strk > 0.7) {
+                if (floor(this.x / this.sz * this.n) % 2 == 0) { img.blendMode(bm1); }
+                else { img.blendMode(bm2); }
+            } else if (strk >= 0.5) {
+                if (floor(this.x / this.sz * this.n) % 2 == 0) { img.blendMode(bm2); }
+                else { img.blendMode(bm1); }
+            }
         }
 
         customShape(this.x, this.y, this.rseed);
@@ -377,8 +429,10 @@ class cshape {
 function customShape(ox, oy, seed) {
     if (strk > 0.7) { t = t_rd }
     if (xinc > 0.35) { img.rotate(PI / nrot); }
-    img.beginShape();
-    for (let i = 0; i < 15; i++) {
+    let ni = 15;
+    if (rdpt <= 0.5) ni = 25;
+    img.beginShape(spmode);
+    for (let i = 0; i < ni; i++) {
         t += seed;
         let x = Math.sin(t) + ox;
         let y = Math.cos(t) + oy;
