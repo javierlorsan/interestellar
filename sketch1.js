@@ -430,7 +430,7 @@ function customShape(ox, oy, seed) {
     if (strk > 0.7) { t = t_rd }
     if (xinc > 0.35) { img.rotate(PI / nrot); }
     let ni = 15;
-    if (rdpt <= 0.5) ni = 33;
+    if (rdpt <= 0.5) ni = 25;
     img.beginShape(spmode);
     for (let i = 0; i < ni; i++) {
         t += seed;
