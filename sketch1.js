@@ -256,7 +256,7 @@ function makeTl() {
     if ((bm1 == 'screen' && bm2 == 'lighten') || (bm1 == 'lighten' && bm2 == 'screen') || (bm1 == 'color-burn' && bm2 == 'screen') || (bm1 == 'screen' && bm2 == 'color-burn') || (bm1 == 'hard-light' && bm2 == 'screen') || bm1 == bm2) bm2 = 'source-over';
     
     let fr = 0.32;
-    let tp = -10.45; //R.random_choice(steps);
+    let tp = R.random_choice(steps);
     if (shm.indexOf(tp) != -1) { fr = 0.4; }
     else if (shp.indexOf(tp) != -1) { fr = 0.54; }
     else if (shmp.indexOf(tp) != -1) {
