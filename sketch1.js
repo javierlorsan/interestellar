@@ -52,18 +52,17 @@ let paleta = [["#03045e", "#023e8a", "#0077b6", "#0096c7", "#00b4d8", "#48cae4",
 ["#FA053F", "#FEB200", "#03FDBC", "#04BEFB", "#06617F", "#ef476f", "#ffd166", "#06d6a0", "#118ab2", "#073b4c"],
 ["#C2C8D4", "#2b9348", "#BF6550", "#80b918", "#8C32CA", "#C61D34", "#d4d700", "#580D14", "#eeef20", "#C70A27"],
 ["#54478c", "#2c699a", "#048ba8", "#0db39e", "#16db93", "#83e377", "#b9e769", "#efea5a", "#f1c453", "#f29e4c"]];
-let shg = [0.1, 10.2625, 26.17994, 0.6, 10.244999999999921, 10.052999999999976, 8.3, 10.261999999999912, 10.262999999999911, -10.45, 10.755555, 11.204999999999977, 11.979999999999995, 15, 16.419999999999973, 16.6, 16.8, -180, 2.3, 2.4, 25.247, 26.179999999999435, 33.259000000000064, -7.35551, -7.35553, 8.7, -8.7];
+let shg = [0.1, 10.2625, 26.17994, 0.6, 10.244999999999921, 10.052999999999976, 10.261999999999912, 10.262999999999911, -10.45, 10.755555, 11.204999999999977, 11.979999999999995, 15, 16.419999999999973, 16.6, 16.8, -180, 2.3, 2.4, 25.247, 33.259000000000064, -7.35551, -7.35553, 8.7, -8.7];
 let shm = [0.7, 1.1, 1.6, 17.75004, 1.8, 30.26399999999995, 10.420999999999824, 11.461999999999835, 16.7, 17.75000000000018, 18.7, 18.710000000000097, 2.1, 2.2, 27.228999999999854, 29.30399999999944, 29.31399999999944, 32.078999999999645, 33.56400000000022, -5.655, 6.9, 7.4, -7.4, 8.4, -8.4, -9.351, -9.352, -9.355];
-let shmg = [10.082975, 0.9, 11.20497, 10, 10.00859999999998, 10.08299999999996, 10.087999999999957, 10.22899999999993, 11.519999999999802, 13.919999999999954, 14.9, 2.5, 2.6, 25.215, 25.219, 26.528999999999993, 28.818999999999537, -3.3, 30.36899999999993, 34.024000000000456];
-let shp = [0.2, 11.3669, 1.2, 30.2639, 1.3, -1.3, 10.471999999999795, 11.366999999999887, 11.39699999999987, 11.9, 12.559999999999983, 14.2, 14.279999999999946, 14.28, 18.1, 30.15899999999997, 31.428999999999718, 5.1, -5.55, 6.1, -6.5555];
-let shmp = [18.570000000000075, 18.85000000000012, 18.879, 25.13, 25.131, 25.1312, 25.1313, 31.4282, 12.559999999999982, 31.428999999999717];
+let shmg = [10.082975, 26.179999999999435, 0.9, 11.20497, 8.3, 10, 10.00859999999998, 10.08299999999996, 10.087999999999957, 10.22899999999993, 11.519999999999802, 13.919999999999954, 14.9, 2.5, 2.6, 25.215, 25.219, 26.528999999999993, 28.818999999999537, -3.3, 30.36899999999993, 34.024000000000456];
+let shp = [18.570000000000075,0.2, 11.3669, 1.2, 30.2639, 1.3, -1.3, 10.471999999999795, 11.366999999999887, 11.39699999999987, 11.9, 12.559999999999983, 14.2, 14.279999999999946, 14.28, 18.1, 30.15899999999997, 31.428999999999718, 5.1, -5.55, 6.1, -6.5555];
+let shmp = [18.85000000000012, 18.879, 25.13, 25.131, 25.1312, 25.1313, 31.4282, 12.559999999999982, 31.428999999999717];
 let steps = shg.concat(shm, shmg, shp, shmp);
 let img;
 let WIDTH = window.innerWidth;
 let HEIGHT = window.innerHeight;
 let sz = Math.min(WIDTH, HEIGHT);
 let palette;
-let tokenHash = fxhash;
 let seed = Math.abs(hashes[0]);
 let noiseScale = 9e-11;
 let bgcolor = '#000000';
@@ -71,7 +70,6 @@ let R = new Random(seed);
 let tkid = R.random_int(0, 999);
 let sb = R.random_int(30, 50);
 let strk = R.random_dec();
-let _palette
 let cshapes = [];
 let rotspd = 7;
 let star;
@@ -106,18 +104,27 @@ let cmbPal = true;
 let t = 0;
 let rdpt = R.random_dec();
 let spmode = '';
+let rdd1 = R.random_choice([4, 8, 16, 32, 64, 128]);
+let rdd2 = R.random_choice([10, 20, 30, 40, 50, 60, 70, 80, 90]);
+let rdinc = R.random_int(2, 3);
+let cmin = R.random_int(1, 10);
+let cmax = R.random_int(1, 10);
+let sp1 = R.random_int(2, 8);
+let sp2 = R.random_int(2, 8);
+let angmlt = R.random_int(7, 21);
+let knum = R.random_choice([5, 10]);
+let rdiv = R.random_choice([1, 2]);
 
 function setup() {
 
-    createCanvas(sz * 1.2, sz); 
-    img = createGraphics(sz * 1.2, sz);  
+    createCanvas(sz * 1.2, sz);
+    img = createGraphics(sz * 1.2, sz);
     img2 = createGraphics(sz * 1.2, sz);
     img2.colorMode(HSB, 360, 100, 100, 10);
     pixelDensity(1);
     centerCanvas();
     ellipseMode(CORNER);
     bModes = [DIFFERENCE, REMOVE, SCREEN, HARD_LIGHT, BLEND, BURN, LIGHTEST];
-
     let colArr = [];
     let ncols = 10;
     let c;
@@ -129,10 +136,10 @@ function setup() {
         if (dist(x, y, w / 2, sz / 2) > w * 0.1) {
             let adj = map(y, 0, sz, 255, 0);
             if (pxs.length < rdc) {
-               c = color(60, adj, 255);
+                c = color(60, adj, 255);
             }
-            else { 
-               c = color(255, adj, 0);
+            else {
+                c = color(255, adj, 0);
             }
             pxs.push(new Pxl(x, y, c));
         }
@@ -158,46 +165,11 @@ function setup() {
     Hcols = shfarr(Hcols);
 
     background(bgcolor);
-    if (strk > 0.97) {
-        initplanet();
-        mot = true;
-    }
-    else { noLoop(); makeTl();}
-} 
+    noLoop();
+    makeTl();
+}
 
 function shfarr(a) { for (var j, i = a.length - 1; i > 0; i--) { j = Math.floor(R.random_dec() * (i + 1));[a[i], a[j]] = [a[j], a[i]] } return a; }
-
-
-function initplanet() {
-
-    col1 = R.random_choice(paleta)[R.random_int(0, 9)];
-    col2 = R.random_choice(paleta)[R.random_int(0, 9)];
-    col3 = R.random_choice(paleta)[R.random_int(0, 9)];
-
-    pts = (Array(k).fill(0)).map(rd_point)
-    ptsch = randChunkSplit(pts, R.random_choice([10,20,30,40,50]));
-
-}
-
-function randChunkSplit(arr, min, max) {
-    var arrs = [], size = 1;
-    var min = min || 1;
-    var max = max || min || 1;
-    while (arr.length > 0) {
-        size = Math.min(max, Math.floor((R.random_dec() * max) + min));
-        arrs.push(arr.splice(0, size));
-    }
-    return arrs;
-}
-
-function rd_point() {
-    r = random(w / 4)
-    t = random(TAU)
-    return [
-        w / 2 + Math.cos(t) * r,
-        w / 2 + Math.sin(t) * r
-    ]
-}
 
 function centerCanvas() {
     var e = document.body.style;
@@ -227,45 +199,44 @@ function mouseClicked() {
 
 function makeTl() {
 
-    //let npoints = 150;
-    //rdpt = 0.4
-    //spmode = R.random_choice([TRIANGLES, TRIANGLE_STRIP, QUADS]); //LINES, 
-    if (rdpt <= 0.5) {
-        npoints = 150;
+    let tipo = R.random_choice([1,3,2,4,5]);
+    cmin = Math.min(cmin, cmax);
+    cmax = Math.max(cmin, cmax);
+    if (tipo == 1 && rdpt <= 0.5) {
+        npoints = 490;
         spmode = R.random_choice([TRIANGLES, TRIANGLE_STRIP, QUADS])
     } else {
-        npoints = R.random_int(500, 3200);
+        npoints = R.random_int(900, 3200);
     }
 
     img.noiseSeed(floor(R.random_num(0, 10e6)));
     let n = R.random_int(5, 50);
-    let alph = R.random_int(75, 255); 
+    let alph = R.random_int(75, 255);
     let mapP = int(npoints * 0.6);
     let x, y;
-    let mg = ['-5.655-4','0.7-4','-3.3-5','14.9-5','10.087999999999957-5','2.6-5','28.818999999999537-5','10.22899999999993-5','-5.55-4','11.39699999999987-4','-5.55-5','8.4-5','32.078999999999645-5','11.461999999999835-5','-7.4-5','17.75004-4','6.9-4', '17.75000000000018-4', '11.979999999999995-5','0.6-4', '0.6-5', '15-5', '-180-5', '11.979999999999995-4', '10.755555-5', '16.419999999999973-5', '-7.35553-5',  '-7.35551-5', '29.30399999999944-5', '11.461999999999835-4', '1.8-5', '0.5-5', '-8.4-5', '-5.655-5', '10.420999999999824-5', '17.75000000000018-5', '16.7-5', '7.4-5', '7.4-4', '32.078999999999645-4', '33.56400000000022-5', '30.26399999999995-4', '0.7-5', '1.6-5', '6.9-5', '1.1-4', '18.1-4', '18.1-5', '11.3669-5', '11.366999999999887-5', '11.366999999999887-44', '5.1-5', '5.1-4', '11.9-4', '11.9-5', '11.39699999999987-5', '-6.5555-q', '18.570000000000075-q', '18.879-5']
-    let gr = ['26.179999999999435-5','-10.45-5','17.75004-5','10.082975-5','10.08299999999996-5','30.2639-4', '1.2-4', '11.3669-4','1.3-4','1.3-5','-1.3-5','1.2-5','-1.3-4','11.366999999999887-4','14.2-4', '30.2639-5','10.471999999999795-5','-5.55-q','-7.4-4','0.7-q','32.078999999999645-q','6.9-q','30.26399999999995-5','1.1-5','26.179999999999435-4','-7.35551-4','-7.35553-4', '26.17994-5','10.244999999999921-5', '14.2-5', '30.15899999999997-5', '30.15899999999997-4', '14.28-5', '14.28-4', '0.2-5', '11.9-q', '18.1-q', '14.279999999999946-4', '14.279999999999946-5', '5.55-q']
-    let pe = ['18.710000000000097-4','-9.355-q','11.204999999999977-q', '18.7-q', '-9.352-q', '18.710000000000097-q', '-9.351-q,10.22899999999993-4', '0.9-q', '30.36899999999993-q'];
-    let mp = ['18.7-4','25.219-4','25.215-q','-3.3-q','25.219-5','-9.351-q','25.247-q','0.1-4', '0.1-5', '0.1-q', '25.247-4', '25.247-5', '25.219-q', '25.215-5', '25.215-4', '-3.3-4', '26.528999999999993-q', '11.20497-q', '13.919999999999954-q', '11.519999999999802-q', '30.36899999999993-q'];
-    if (npoints <= 1800) rotspd=1;
+    let mg = ['11.519999999999802-5', '26.528999999999993-q','-9.352-5', '0.1-q','25.215-5', '0.9-5', '-5.655-4', '0.7-4', '-3.3-5', '2.6-5',  '-5.55-4', '-5.55-5', '32.078999999999645-5', '11.461999999999835-5', '-7.4-5', '17.75004-4', '6.9-4', '17.75000000000018-4', '11.979999999999995-5', '33.259000000000064-5','0.6-4', '0.6-5', '-180-5', '11.979999999999995-4', '-1.3-5','-7.35553-5', '-7.35551-5',  '11.461999999999835-4', '0.5-5', '-5.655-5', '17.75000000000018-5', '16.7-5', '7.4-5', '32.078999999999645-4', '30.26399999999995-4', '0.7-5',  '6.9-5', '1.1-4', '18.1-4', '18.1-5', '11.3669-5', '11.366999999999887-5', '11.366999999999887-44', '5.1-5', '5.1-4', '11.9-4', '11.9-5', '11.39699999999987-5', '-6.5555-q', '18.570000000000075-q']
+    let gr = ['-180-4', '-8.4-5', '1.6-q', '11.20497-q','26.528999999999993-5', '10.471999999999795-5', '31.4282-5', '11.204999999999977-q', '26.179999999999435-4', '18.85000000000012-5', '28.818999999999537-5', '2.3-5', '-5.655-q', '13.919999999999954-q', '10.261999999999912-5', '14.9-5', '25.215-q', '0.1-5', '25.219-q', '25.247-5', '10.22899999999993-5', '10.755555-5', '11.519999999999802-4', '10.087999999999957-5', '10.420999999999824-4', '29.30399999999944-5','15-5', '1.8-5', '25.247-q', '18.7-q', '10.2625-5', '8.4-5', '11.39699999999987-4', '10.471999999999795-4', '-9.355-5', '10.420999999999824-5', '28.818999999999537-4', '11.519999999999802-q', '16.419999999999973-5', '25.219-5', '26.179999999999435-5', '30.36899999999993-q', '0.9-q', '-10.45-5', '17.75004-5', '10.082975-5', '10.08299999999996-5', '33.56400000000022-5','30.2639-4', '1.2-4', '11.3669-4', '1.3-4', '1.3-5', '1.2-5', '-1.3-4', '11.366999999999887-4', '14.2-4', '30.2639-5', '-5.55-q', '-7.4-4', '0.7-q', '7.4-4', '32.078999999999645-q', '6.9-q', '30.26399999999995-5', '1.6-5', '1.1-5', '-7.35551-4', '-7.35553-4', '26.17994-5', '10.244999999999921-5', '14.2-5', '30.15899999999997-5', '30.15899999999997-4', '14.28-5', '14.28-4', '11.9-q', '18.1-q', '14.279999999999946-4', '14.279999999999946-5', '5.55-q']
+    let pe = ['12.559999999999983-q','12.559999999999983-4', '25.215-4','18.710000000000097-4', '0.2-5',  '-9.355-q', '-9.352-q', '18.710000000000097-q', '-9.351-q,10.22899999999993-4', '18.879-5'];
+    let mp = ['18.7-4', '25.219-4',  '-3.3-q', '0.1-4', '25.247-4', '-3.3-4', '30.36899999999993-q'];
 
     bm1 = R.random_choice(bModes);
     bm2 = R.random_choice(bModes);
-
     //console.log(bm1 + ' - ' + bm2)
 
     if ((bm1 == 'screen' && bm2 == 'lighten') || (bm1 == 'lighten' && bm2 == 'screen') || (bm1 == 'color-burn' && bm2 == 'screen') || (bm1 == 'screen' && bm2 == 'color-burn') || (bm1 == 'hard-light' && bm2 == 'screen') || bm1 == bm2) bm2 = 'source-over';
-    
+
     let fr = 0.32;
     let tp = R.random_choice(steps);
     if (shm.indexOf(tp) != -1) { fr = 0.4; }
     else if (shp.indexOf(tp) != -1) { fr = 0.54; }
     else if (shmp.indexOf(tp) != -1) {
-        if (xinc < 0.5) { fr = 0.72 } else { fr = 0.85; } }
-    else if (shmg.indexOf(tp) != -1) { fr = 0.2; } 
+        if (xinc < 0.5) { fr = 0.72 } else { fr = 0.85; }
+    }
+    else if (shmg.indexOf(tp) != -1) { fr = 0.23; } 
 
     let tpmd = tp.toString() + '-' + spmode.toString().substring(0, 1);
 
-    if (npoints < 200) {
+    if (npoints < 500) {
         mapP = int(npoints * 0.3);
         if (shg.indexOf(tp) != -1) {
             if (mg.indexOf(tpmd) != -1) { fr = 0.15; }
@@ -299,11 +270,53 @@ function makeTl() {
         }
     }
 
-    
-    //fr = 0.3
-    console.log(rdpt + ' - ' + tpmd + ' - ' + fr);
-    
+    console.log(fr + ' - ' + rdinc);
 
+    if (tipo == 2) {
+        if (rdinc == 2) {
+            switch (true) {
+                case (fr <= 0.2):
+                    fr = fr * 3.5;
+                    break;
+                case (fr == 0.23):
+                    fr = fr * 2.5;
+                    break;
+                case (fr <= 0.32):
+                    fr = fr * 1.7;
+                    break;
+                case (fr <= 0.4):
+                    fr = fr * 1.3;
+                    break;
+            }
+        } else {
+            switch (true) {
+                case (fr <= 0.23):
+                    fr = fr * 1.5;
+                    break;
+                case (fr == 0.4):
+                    fr = fr * 0.5;
+                    break;
+                case (fr == 0.74):
+                    fr = fr * 0.6;
+                    break;
+                case (fr == 0.54):
+                    fr = fr * 0.5;
+                    break;
+                case (fr == 0.32):
+                    fr = fr * 0.8;
+                    break;
+                case (fr == 0.3):
+                    fr = fr * 0.4;
+                    break;
+            }
+        }
+    }
+
+    if (tipo == 3) fr = 0.1;
+    if (tipo == 4) fr = 0.07;
+    if (tipo == 5) fr = 0.1;
+
+    console.log(tpmd + ' - ' + tipo + ' - ' + fr + ' - ' + nrot + ' - ' + strk);
     let radius = sz * 0.00;
     img.translate(sz * 1.2 / 2, sz / 2);
     img.fill(bgcolor);
@@ -312,6 +325,8 @@ function makeTl() {
     let rd1 = random(0, 75);
     let rd2 = random(0, 55);
     let color;
+
+    //if (tipo >= 2) frameRate(20);
 
     for (let i = 0; i < npoints; i++) {
         let size = map((i / mapP) ** 0.8, 0, 1, sz * fr, 0);
@@ -325,8 +340,7 @@ function makeTl() {
         } else {
             color = lerpColorScheme(curlNoise(x * noiseScale, (y + 0) * noiseScale, 0), palette, alph);
         }
-
-        cshapes.push(new cshape(x, y, tp, color, size, i, alph, npoints))
+        cshapes.push(new cshape(x, y, tp, color, size, i, alph, npoints, tipo))
 
         t += R.random_num(20, 30);
         if (radius < sz) {
@@ -348,7 +362,7 @@ function getNewPal() {
 }
 
 class cshape {
-    constructor(x, y, seed, color, size, n, alph, np) {
+    constructor(x, y, seed, color, size, n, alph, np, tipo) {
         this.x = x;
         this.y = y;
         this.rseed = seed;
@@ -361,39 +375,43 @@ class cshape {
         this.init();
         this.rnd1;
         this.rnd2;
+        this.tipo = tipo;
         this.ndiv = (n < np / 2) ? 100 : 200;
         this.chcol = false;
         this.sdbl = sdbl;
         this.sdbl2 = 0;
         this.incdes = 'des'
+        this.ph = 0;
     }
 
     show() {
 
         if (this.chcol) {
-            if (this.n == 0) { palette = getNewPal();}
+            if (this.n == 0) { palette = getNewPal(); }
             if (floor(this.x / this.sz * this.n) % 2 == 0) {
                 this.col = lerpColorScheme(curlNoise(this.x * noiseScale, (this.y + 0) * noiseScale, 0), palette.reverse(), this.alph); //colores[this.rdlrpal]
             } else {
                 this.col = lerpColorScheme(curlNoise(this.x * noiseScale, (this.y + 0) * noiseScale, 0), palette, this.alph);
             }
         }
-        
-        if (this.np <= 1800) {
-            img.drawingContext.shadowColor = this.col;
-            img.drawingContext.shadowBlur = this.sz * this.sdbl;
-            if (this.incdes == 'des') {this.sdbl -= 0.01; } else { this.sdbl += 0.01 }
 
-            if (this.sdbl >= 0.3) this.incdes = 'des'
-            if (this.sdbl <= -0.4) this.incdes = 'inc'
-        } else if (this.np < 2800) {
-            img.drawingContext.shadowColor = this.col;
-            img.drawingContext.shadowBlur = this.sz * this.sdbl2;
+        if (this.tipo == 1) {
+            if (this.np <= 1800) {
+                img.drawingContext.shadowColor = this.col;
+                img.drawingContext.shadowBlur = this.sz * this.sdbl;
+                if (this.incdes == 'des') { this.sdbl -= 0.02; } else { this.sdbl += 0.02 }
 
-            if (this.incdes == 'des') {this.sdbl2 -= 0.01;} else { this.sdbl2 += 0.01 }
+                if (this.sdbl >= 0.25) this.incdes = 'des'
+                if (this.sdbl <= -0.3) this.incdes = 'inc'
+            } else if (this.np < 2800) {
+                img.drawingContext.shadowColor = this.col;
+                img.drawingContext.shadowBlur = this.sz * this.sdbl2;
 
-            if (this.sdbl2 >= 0.25) this.incdes = 'des'
-            if (this.sdbl2 <= -0.25) this.incdes = 'inc'
+                if (this.incdes == 'des') { this.sdbl2 -= 0.02; } else { this.sdbl2 += 0.02 }
+
+                if (this.sdbl2 >= 0.25) this.incdes = 'des'
+                if (this.sdbl2 <= -0.25) this.incdes = 'inc'
+            }
         }
 
         img.stroke(this.col);
@@ -410,8 +428,35 @@ class cshape {
             }
         }
 
-        customShape(this.x, this.y, this.rseed);
-
+        if (this.np < 500) {
+            shape1(this.x, this.y, this.rseed);
+        } else {
+            switch (this.tipo) {
+                case 1:
+                    shape1(this.x, this.y, this.rseed);
+                    break;
+                case 2:
+                    shape2(this.ph, this.rseed);
+                    this.ph += 0.05;
+                    break;
+                case 3:
+                    shape3(this.sz, this.rseed, this.ph);
+                    this.ph += 0.05;
+                    break;
+                case 4:
+                    shape4(this.sz, this.rseed, this.ph);
+                    this.ph += 0.05;
+                    break;
+                case 5:
+                    shape5(this.ph, this.rseed, this.sz);
+                    this.ph += 0.1;
+                    break;
+                case 6:
+                    shape6(this.ph, this.rseed, this.sz);
+                    this.ph += 0.1;
+                    break;
+            }
+        }
     }
 
     move() {
@@ -419,20 +464,123 @@ class cshape {
     }
 
     changeCol(val) {
-        this.chcol = val;
+        this.chcol = val; 
     }
 
     init() { }
 }
 
+function shape6(ph, seed, sz) {
+}
 
-function customShape(ox, oy, seed) {
+function shape5(ph, seed, sz) {
+    let x;
+    let pitau = (pntcur < 0.5) ? PI : TAU;
+    if (strk > 0.5) { t = t_rd }
+    if (strk > 0.67) img.rotate(pitau / nrot);
+    else img.rotate(pitau / rdinc);
+    img.beginShape();
+    for (let i = 0; i < 90; i += 5) {
+        let r1 = 80 + cos(i * 10 + ph) * rdd2;
+        t += seed;
+        if (strk > 0.67) {
+            x = cos(t - frameCount * 3) * 5;
+        }
+        else {
+            if (strk > 0.33) x = sin(t) * i / nrot;
+            else x = sin(t) * r1 / rdiv;
+        }
+        if (xinc <= 0.6) {
+            img.vertex(x, i * 2);
+        } else {
+            img.rect(x, i * 2.5, 1, nrot);
+        }
+    }
+    img.endShape(CLOSE);
+}
+
+function shape4(sz, seed, ph) {
+    const circleStep = sp1;
+    const circleDiv = sp2;
+    const xyFreq = 0.0005;
+    let r1;
+    V = p5.Vector;
+    for (let i = 0; i < circleDiv; i++) {
+        for (let j = 0; j < TAU / circleDiv; j += circleStep) {
+            if (xinc >= 0.5)  r1 = (sz * 3) + sin(angle * 10 + ph) * rdd2;
+            else r1 = 80 + cos(j * 10 + ph) * rdd2;
+            t += seed;
+            const v = new V(r1 * cos(t), r1 * sin(t));
+            img.beginShape();
+            for (let k = 0; k < knum; k++) {
+                const ang = noise(v.x * xyFreq, v.y * xyFreq, k * 0.001) * 100;
+                v.add(V.fromAngle(ang).mult(angmlt));
+                switch (true) {
+                    case (strk <= 0.3):
+                        img.curveVertex(v.x, v.y);
+                        break;
+                    case (strk <= 0.66):
+                        img.point(v.x, v.y);
+                        break;
+                    default:
+                        img.rect(v.x, v.y, 1, 1);
+                        break;
+                }
+            }
+            img.endShape();
+        }
+        img.rotate(TAU / circleDiv); 
+    }
+}
+
+function shape3(sz, seed, ph) {
+    if (strk >= 0.2) { t = t_rd }
+    let increment = PI * cmin / nrot;
+    img.beginShape();
+    for (let ang = 0; ang < PI * cmax; ang += increment) {
+        let r1 = (sz * 3) + sin(ang * 10 + ph) * rdd2;
+        t += seed;
+        let x = cos(t) * r1/rdiv;
+        let y = sin(t) * r1;
+        if (xinc < 0.5) {
+            if (cmin != cmax) curveVertex(x, y);
+            else vertex(x, y);
+        } else {
+            img.rect(x, y, 1, 1);
+        }
+    }
+    img.endShape(CLOSE);
+    if (pntcur < 0.2) { img.rotate(PI / nrot); } else { img.rotate(TAU / nrot); }
+}
+
+
+function shape2(ph, seed) {
+    if (strk >= 0.4) { t = t_rd }
+    let pitau = (pntcur < 0.5) ? PI : TAU;
+    img.rotate(pitau / nrot);
+    let increment = pitau / rdinc;
+    img.beginShape();
+    for (let a = 0; a < pitau; a += increment) {
+        let r1 = (w/rdd1) + sin(a * 10 + ph) * rdd2;
+        t += seed;
+        let x = cos(t) * r1;
+        let y = sin(t) * r1;
+        if (xinc < 0.5) {
+            if (cmin != cmax) curveVertex(x, y);
+            else vertex(x, y);
+        } else {
+            img.rect(x, y, 1, 50);
+        }
+    }
+    img.endShape(CLOSE);
+}
+
+
+function shape1(ox, oy, seed) {
     if (strk > 0.7) { t = t_rd }
     if (xinc > 0.35) { img.rotate(PI / nrot); }
-    let ni = 15;
-    if (rdpt <= 0.5) ni = 25;
     img.beginShape(spmode);
-    for (let i = 0; i < ni; i++) {
+    for (let i = 0; i < 15; i++) {
         t += seed;
         let x = Math.sin(t) + ox;
         let y = Math.cos(t) + oy;
@@ -445,7 +593,7 @@ function draw() {
 
     background(bgcolor);
 
-    if (frameCount % 4 == 0) nbl();
+    if (frameCount % 8 == 0 && frameCount < 350) nbl();
 
     image(img2.get(), 0, 0);
 
@@ -472,54 +620,17 @@ function draw() {
         x.display();
     }
 
-    if (strk > 0.97) {
-        if (xinc <= 0.7) {
-            if (frameCount % 60 == 0)
-                col2 = R.random_choice(paleta)[R.random_int(0, 9)];
-        }
-        planet();
-    }
-    else {
-        if (frameCount < rotspd || frameCount % rotspd == 0) {
-            img.clear();
-            for (let cs of cshapes) {
-                if (frameCount % 15 == 0) { cs.changeCol(true) } else { cs.changeCol(false) };
-                cs.show();
-                cs.move();
-            }
+    if (frameCount < rotspd || frameCount % rotspd == 0) {
+        img.clear();
+        for (let cs of cshapes) {
+            if (frameCount % 15 == 0) { cs.changeCol(true);} else { cs.changeCol(false) };
+            cs.show();
+            cs.move();
         }
     }
 
     imgClone = img.get();
     image(imgClone, 0, 0);
-}
-
-function planet() {
-    if (xinc <= 0.7) {
-        img.drawingContext.shadowBlur = 15;
-        img.strokeWeight(5);
-    }
-    for (i = ptsch.length; --i;) {
-        for (j = ptsch[i].length; --j;) {
-            [x, y] = ptsch[i][j];
-            if (i % 2 == 0) {
-                x += Math.sin(n = noise(x / Math.floor(w * pntcur), y / Math.floor(w * pntcur)) * TAU)
-                y += Math.cos(n);
-                if (j % 2 == 0) { img.stroke(col1); img.drawingContext.shadowColor = col1}
-                else { img.stroke(col3); img.drawingContext.shadowColor = col3}
-            } else {
-                x -= Math.sin(n = noise(x / Math.floor(w * pntcur), y / Math.floor(w * pntcur)) * TAU)
-                y -= Math.cos(n);
-                if (j % 2 == 0) { img.stroke(col2); img.drawingContext.shadowColor = col2}
-                else { img.stroke(col3); img.drawingContext.shadowColor = col3 }
-            }
-            img.circle(x, y, .3)
-            if (pow(k - x, 2) + pow(k - y, 2) < incirc)
-                ptsch[i][j] = [x, y, t]
-            else ptsch[i][j] = rd_point()
-        }
-    }
-
 }
 
 class Pxl {
@@ -577,7 +688,7 @@ class parti {
     }
 
     show() {
-        
+
         var sx = map(this.x / this.z, 0, 1, 0, width);
         var sy = map(this.y / this.z, 0, 1, 0, height);
         var r = map(this.z, 0, width, 12, 0);
@@ -586,7 +697,7 @@ class parti {
         stroke(0);
         strokeWeight(r * 0.05);
         fill(255);
-        ellipse(sx, sy, r, r);        
+        ellipse(sx, sy, r, r);
     }
 }
 
@@ -698,7 +809,7 @@ function nbl() {
         nW2(x, ny);
         xoff += xinc;
     }
-    yoff += yinc;  
+    yoff += yinc;
     img2.pop();
 }
 
