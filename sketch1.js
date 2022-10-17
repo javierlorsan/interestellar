@@ -516,7 +516,7 @@ function shape4(sz, seed, ph) {
                 const ang = noise(v.x * xyFreq, v.y * xyFreq, k * 0.001) * 100;
                 v.add(V.fromAngle(ang).mult(angmlt));
                 switch (true) {
-                    case (strk <= 0.3):
+                    case (strk <= 0.33):
                         img.curveVertex(v.x, v.y);
                         break;
                     case (strk <= 0.66):
