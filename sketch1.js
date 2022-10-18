@@ -336,7 +336,7 @@ function makeTl() {
     if (tipo == 4) fr = 0.07;
     if (tipo == 5) fr = 0.1;
 
-    console.log(tpmd + ' - ' + tipo + ' - ' + tkid + ' - ' + nrot + ' - ' + strk);
+    console.log(xinc + ' - ' + tipo + ' - ' + pntcur + ' - ' + nrot + ' - ' + strk);
     let radius = sz * 0.00;
     img.translate(sz * 1.2 / 2, sz / 2);
     img.fill(bgcolor);
@@ -506,7 +506,7 @@ function shape5(ph, seed, sz) {
         else if (strk > 0.33) x = sin(t) * i / nrot;
         else x = sin(t) * r1 / rdiv;
         x = sin(t) * r1 / rdiv;
-        if (xinc <= 0.6) {
+        if (xinc < 0.5) {
             img.vertex(x, i * 2);
         } else {
             img.rect(x, i * 2.5, 1, nrot);
