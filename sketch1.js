@@ -94,7 +94,7 @@ let yinc = R.random_num(0.01, 0.1);
 let xinc = R.random_dec();
 let pntcur = R.random_dec();
 let xelle = R.random_int(10, 20);
-let nrot = R.random_int(2, 10);
+let nrot = R.random_int(2, 15);
 let img2;
 let H1 = R.random_int(0, 53);
 let H2 = R.random_int(60, 150);
@@ -114,6 +114,7 @@ let sp2 = R.random_int(2, 8);
 let angmlt = R.random_int(7, 21);
 let knum = R.random_choice([5, 10]);
 let rdiv = R.random_choice([1, 2]);
+let sp5r = R.random_int(75, 105);
 
 function setup() {
 
@@ -476,20 +477,16 @@ function shape6(ph, seed, sz) {
 function shape5(ph, seed, sz) {
     let x;
     let pitau = (pntcur < 0.5) ? PI : TAU;
-    if (strk > 0.5) { t = t_rd }
-    if (strk > 0.67) img.rotate(pitau / nrot);
-    else img.rotate(pitau / rdinc);
+    if (pntcur > 0.5) { t = t_rd }
+    img.rotate(pitau / nrot);
     img.beginShape();
-    for (let i = 0; i < 90; i += 5) {
-        let r1 = 80 + cos(i * 10 + ph) * rdd2;
+    for (let i = 0; i < sp5r; i += 5) {
+        let r1 = 80 + sin(i * 10 + ph) * rdd2;
         t += seed;
-        if (strk > 0.67) {
-            x = cos(t - frameCount * 3) * 5;
-        }
-        else {
-            if (strk > 0.33) x = sin(t) * i / nrot;
-            else x = sin(t) * r1 / rdiv;
-        }
+        if (strk > 0.67) x = cos(t - frameCount * 3) * 5;
+        else if (strk > 0.33) x = sin(t) * i / nrot;
+        else x = sin(t) * r1 / rdiv;
+        x = sin(t) * r1 / rdiv;
         if (xinc <= 0.6) {
             img.vertex(x, i * 2);
         } else {
@@ -534,15 +531,15 @@ function shape4(sz, seed, ph) {
 }
 
 function shape3(sz, seed, ph) {
-    if (strk >= 0.2) { t = t_rd }
-    let increment = PI * cmin / nrot;
+    if (strk >= 0.4) { t = t_rd }
+    let increment = (PI * cmin) / nrot;
     img.beginShape();
     for (let ang = 0; ang < PI * cmax; ang += increment) {
         let r1 = (sz * 3) + sin(ang * 10 + ph) * rdd2;
         t += seed;
         let x = cos(t) * r1/rdiv;
         let y = sin(t) * r1;
-        if (xinc < 0.5) {
+        if (xinc <= 0.5) {
             if (cmin != cmax) curveVertex(x, y);
             else vertex(x, y);
         } else {
