@@ -63,11 +63,12 @@ let WIDTH = window.innerWidth;
 let HEIGHT = window.innerHeight;
 let sz = Math.min(WIDTH, HEIGHT);
 let palette;
-let seed = Math.abs(hashes[0]);
+let tokenData = genTokenData(448);
 let noiseScale = 9e-11;
 let bgcolor = '#000000';
+let tkid = tokenData.tokenId;
+let seed = parseInt(tokenData.hash.slice(0, 16), 16)
 let R = new Random(seed);
-let tkid = R.random_int(0, 999);
 let sb = R.random_int(30, 50);
 let strk = R.random_dec();
 let cshapes = [];
@@ -198,9 +199,29 @@ function mouseClicked() {
     }
 }
 
+function genTokenData(projectNum) {
+    let data = {};
+    let hash = "0x";
+    for (var i = 0; i < 64; i++) {
+        hash += Math.floor(Math.random() * 16).toString(16);
+    }
+    data.hash = hash;
+    data.tokenId = (projectNum * 1000000 + Math.floor(Math.random() * 1000)).toString();
+    return data;
+}
+
+function getTipo() {
+
+    let tk = tkid.slice(-1);
+    if (tk == '0') tk = 10;
+    tk = Number(tk);
+    if (tk > 5) tk = tk - 5;
+    return tk;
+}
+
 function makeTl() {
 
-    let tipo = R.random_choice([1,3,2,4,5]);
+    let tipo = getTipo();//R.random_choice([1,3,2,4,5]);
     cmin = Math.min(cmin, cmax);
     cmax = Math.max(cmin, cmax);
     if (tipo == 1 && rdpt <= 0.5) {
@@ -271,8 +292,6 @@ function makeTl() {
         }
     }
 
-    console.log(fr + ' - ' + rdinc);
-
     if (tipo == 2) {
         if (rdinc == 2) {
             switch (true) {
@@ -317,7 +336,7 @@ function makeTl() {
     if (tipo == 4) fr = 0.07;
     if (tipo == 5) fr = 0.1;
 
-    console.log(tpmd + ' - ' + tipo + ' - ' + fr + ' - ' + nrot + ' - ' + strk);
+    console.log(tpmd + ' - ' + tipo + ' - ' + tkid + ' - ' + nrot + ' - ' + strk);
     let radius = sz * 0.00;
     img.translate(sz * 1.2 / 2, sz / 2);
     img.fill(bgcolor);
