@@ -292,26 +292,28 @@ function makeTl() {
         }
     }
 
+    console.log(fr);
+
     if (tipo == 2) {
         if (rdinc == 2) {
             switch (true) {
                 case (fr <= 0.2):
-                    fr = fr * 3.5;
+                    fr = fr * 3;
                     break;
                 case (fr == 0.23):
-                    fr = fr * 2.5;
+                    fr = fr * 2;
                     break;
                 case (fr <= 0.32):
-                    fr = fr * 1.7;
+                    fr = fr * 1.2;
                     break;
                 case (fr <= 0.4):
-                    fr = fr * 1.3;
+                    fr = fr * 0.9;
                     break;
             }
         } else {
             switch (true) {
                 case (fr <= 0.23):
-                    fr = fr * 1.5;
+                    fr = fr * 1.1;
                     break;
                 case (fr == 0.4):
                     fr = fr * 0.5;
@@ -320,7 +322,7 @@ function makeTl() {
                     fr = fr * 0.6;
                     break;
                 case (fr == 0.54):
-                    fr = fr * 0.5;
+                    fr = fr * 0.4;
                     break;
                 case (fr == 0.32):
                     fr = fr * 0.8;
@@ -336,7 +338,7 @@ function makeTl() {
     if (tipo == 4) fr = 0.07;
     if (tipo == 5) fr = 0.1;
 
-    console.log(xinc + ' - ' + tipo + ' - ' + pntcur + ' - ' + nrot + ' - ' + strk);
+    console.log(t_rd + ' - ' + tp + ' - ' + xinc + ' - ' + fr + ' - ' + strk);
     let radius = sz * 0.00;
     img.translate(sz * 1.2 / 2, sz / 2);
     img.fill(bgcolor);
@@ -581,7 +583,7 @@ function shape2(ph, seed) {
         t += seed;
         let x = cos(t) * r1;
         let y = sin(t) * r1;
-        if (xinc < 0.5) {
+        if (xinc < 0.7) {
             if (cmin != cmax) curveVertex(x, y);
             else vertex(x, y);
         } else {
