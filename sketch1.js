@@ -338,7 +338,7 @@ function makeTl() {
     if (tipo == 4) fr = 0.07;
     if (tipo == 5) fr = 0.1;
 
-    console.log(t_rd + ' - ' + tp + ' - ' + xinc + ' - ' + fr + ' - ' + strk);
+    console.log(t_rd + ' - ' + tpmd + ' - ' + xinc + ' - ' + fr + ' - ' + strk);
     let radius = sz * 0.00;
     img.translate(sz * 1.2 / 2, sz / 2);
     img.fill(bgcolor);
@@ -583,7 +583,7 @@ function shape2(ph, seed) {
         t += seed;
         let x = cos(t) * r1;
         let y = sin(t) * r1;
-        if (xinc < 0.7) {
+        if (xinc < 0.8) {
             if (cmin != cmax) curveVertex(x, y);
             else vertex(x, y);
         } else {
