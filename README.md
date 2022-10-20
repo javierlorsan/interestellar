@@ -1,4 +1,4 @@
-# interestellar
+# interstellar
 A journey through the universe 
 
 Interstellar is a journey through the universe observing far away stars, planets, dark matter and singularities such as black holes. Some of them can be stereoscopic and others can give a three-dimensional feeling. Sometimes the journey can be slower due to the strong gravitational pull of some black holes. Sometimes we will pass very close and you have to be very careful because they can explode. Go now into deep space.
