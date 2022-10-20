@@ -499,13 +499,13 @@ function shape6(ph, seed, sz) {
 function shape5(ph, seed, sz) {
     let x;
     let pitau = (pntcur < 0.5) ? PI : TAU;
-    if (pntcur > 0.5) { t = t_rd }
+    if (pntcur > 0.3) { t = t_rd }
     img.rotate(pitau / nrot);
     img.beginShape();
     for (let i = 0; i < sp5r; i += 5) {
         let r1 = 80 + sin(i * 10 + ph) * rdd2;
         t += seed;
-        if (strk > 0.67) x = cos(t - frameCount * 3) * 5;
+        if (strk > 0.7) x = cos(t - frameCount * 3) * 5;
         else if (strk > 0.3) x = sin(t) * i / nrot;
         else x = sin(t) * r1 / rdiv;
         if (xinc < 0.5) {
