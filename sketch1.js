@@ -337,7 +337,7 @@ function makeTl() {
     if (tipo == 3 || tipo == 5) fr = 0.1;
     if (tipo == 4) fr = 0.07;
 
-    console.log(pntcur + ' - ' + tpmd + ' - xinc:' + xinc + ' - fr:' + fr + ' - strk' + strk);
+    console.log(' tipo:' + tipo + ' pntcur: ' + pntcur + ' - tpmd:' + tpmd + ' - xinc:' + xinc + ' - fr:' + fr + ' - strk:' + strk);
     let radius = sz * 0.00;
     img.translate(sz * 1.2 / 2, sz / 2);
     img.fill(bgcolor);
@@ -574,7 +574,7 @@ function shape3(sz, seed, ph) {
 
 
 function shape2(ph, seed) {
-    if (strk >= 0.4) { t = t_rd }
+    if (strk >= 0.3) { t = t_rd }
     let pitau = (pntcur < 0.5) ? PI : TAU;
     img.rotate(pitau / nrot);
     let increment = pitau / rdinc;
@@ -585,7 +585,7 @@ function shape2(ph, seed) {
         let x = cos(t) * r1;
         let y = sin(t) * r1;
         if (xinc < 0.8) {
-            if (cmin != cmax) curveVertex(x, y);
+            if (cmin == cmax) curveVertex(x, y);
             else vertex(x, y);
         } else {
             img.rect(x, y, 1, 50);
