@@ -562,7 +562,7 @@ function shape3(sz, seed, ph) {
         t += seed;
         let x = cos(t) * r1/rdiv;
         let y = sin(t) * r1;
-        if (xinc < 0.4) {
+        if (xinc < 0.3) {
             if (cmin != cmax) curveVertex(x, y);
             else vertex(x, y);
         } else {
