@@ -553,7 +553,7 @@ function shape4(sz, seed, ph) {
 }
 
 function shape3(sz, seed, ph) {
-    if (strk >= 0.4) { t = t_rd }
+    if (strk >= 0.3) { t = t_rd }
     if (pntcur < 0.5) { img.rotate(PI / nrot); } else { img.rotate(TAU / nrot); }
     let increment = (PI * cmin) / nrot;
     img.beginShape();
