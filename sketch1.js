@@ -216,6 +216,7 @@ function getTipo() {
     if (tk == '0') tk = 10;
     tk = Number(tk);
     if (tk > 5) tk = tk - 5;
+    if (tk == 6) tk = R.random_int(2, 5);
     return tk;
 }
 
