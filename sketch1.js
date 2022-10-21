@@ -472,10 +472,6 @@ class cshape {
                     shape5(this.ph, this.rseed, this.sz);
                     this.ph += 0.1;
                     break;
-                case 6:
-                    shape6(this.ph, this.rseed, this.sz);
-                    this.ph += 0.1;
-                    break;
             }
         }
     }
@@ -491,11 +487,6 @@ class cshape {
     init() { }
 }
 
-function shape6(ph, seed, sz) {
-
-
-}
-
 function shape5(ph, seed, sz) {
     let x;
     let pitau = (pntcur < 0.5) ? PI : TAU;
@@ -508,10 +499,17 @@ function shape5(ph, seed, sz) {
         if (strk > 0.7) x = cos(t - frameCount * 3) * 5;
         else if (strk > 0.4) x = sin(t) * i / nrot;
         else x = sin(t) * r1 / rdiv;
-        if (xinc < 0.5) {
-            img.vertex(x, i * 2);
-        } else {
-            img.rect(x, i * 2.5, 1, nrot);
+        switch (true) {
+            case (xinc <= 0.33):
+                img.vertex(x, i * 2);
+                break;
+            case (xinc <= 0.66):
+                img.rect(x, i * 2.5, 1, nrot);
+                break;
+            default:
+                img.strokeWeight(1);
+                img.line(x, i * 2.5, x, i * 3);
+                break;
         }
     }
     img.endShape(CLOSE);
@@ -534,11 +532,15 @@ function shape4(sz, seed, ph) {
                 const ang = noise(v.x * xyFreq, v.y * xyFreq, k * 0.001) * 100;
                 v.add(V.fromAngle(ang).mult(angmlt));
                 switch (true) {
-                    case (strk <= 0.33):
+                    case (strk <= 0.2):
                         img.curveVertex(v.x, v.y);
                         break;
-                    case (strk <= 0.66):
+                    case (strk <= 0.4):
                         img.point(v.x, v.y);
+                        break;
+                    case (strk <= 0.8):
+                        img.strokeWeight(1);
+                        img.line(v.x, v.y, 1, sz*5);
                         break;
                     default:
                         img.rect(v.x, v.y, 1, 1);
@@ -561,11 +563,17 @@ function shape3(sz, seed, ph) {
         t += seed;
         let x = cos(t) * r1/rdiv;
         let y = sin(t) * r1;
-        if (xinc < 0.3) {
-            if (cmin != cmax) curveVertex(x, y);
-            else vertex(x, y);
-        } else {
-            img.rect(x, y, 1, sz);
+        switch (true) {
+            case (xinc <= 0.3):
+                if (cmin != cmax) curveVertex(x, y);
+                else vertex(x, y);
+            case (xinc <= 0.6):
+                img.rect(x, y, 1, 1);
+                break;
+            default:
+                img.strokeWeight(1);
+                img.line(x, y, 1, sz * 5);
+                break;
         }
     }
     img.endShape(CLOSE);
@@ -583,12 +591,20 @@ function shape2(ph, seed) {
         t += seed;
         let x = cos(t) * r1;
         let y = sin(t) * r1;
-        if (xinc < 0.8) {
-            if (cmin == cmax) curveVertex(x, y);
-            else vertex(x, y);
-        } else {
-            img.rect(x, y, 1, 50);
+        switch (true) {
+            case (xinc <= 0.4):
+                if (cmin == cmax) curveVertex(x, y);
+                else vertex(x, y);
+                break;
+            case (xinc <= 0.8):
+                img.strokeWeight(1);
+                img.line(x, y, 1, sz * 0.4);
+                break;
+            default:
+                img.rect(x, y, 1, sz * 0.1);
+                break;
         }
+        
     }
     img.endShape(CLOSE);
 }
