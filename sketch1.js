@@ -506,7 +506,7 @@ function shape5(ph, seed, sz) {
         let r1 = 80 + sin(i * 10 + ph) * rdd2;
         t += seed;
         if (strk > 0.7) x = cos(t - frameCount * 3) * 5;
-        else if (strk > 0.3) x = sin(t) * i / nrot;
+        else if (strk > 0.4) x = sin(t) * i / nrot;
         else x = sin(t) * r1 / rdiv;
         if (xinc < 0.5) {
             img.vertex(x, i * 2);
