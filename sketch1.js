@@ -565,10 +565,10 @@ function shape3(sz, seed, ph) {
         let x = cos(t) * r1/rdiv;
         let y = sin(t) * r1;
         switch (true) {
-            case (xinc <= 0.3):
+            case (xinc <= 0.33):
                 if (cmin != cmax) curveVertex(x, y);
                 else vertex(x, y);
-            case (xinc <= 0.6):
+            case (xinc <= 0.66):
                 img.rect(x, y, 1, 1);
                 break;
             default:
@@ -593,11 +593,11 @@ function shape2(ph, seed) {
         let x = cos(t) * r1;
         let y = sin(t) * r1;
         switch (true) {
-            case (xinc <= 0.4):
+            case (xinc <= 0.33):
                 if (cmin == cmax) curveVertex(x, y);
                 else vertex(x, y);
                 break;
-            case (xinc <= 0.8):
+            case (xinc <= 0.7):
                 img.strokeWeight(1);
                 img.line(x, y, 1, sz * 0.4);
                 break;
