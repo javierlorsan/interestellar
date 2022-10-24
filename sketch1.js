@@ -503,8 +503,8 @@ function shape5(ph, seed, sz) {
     for (let i = 0; i < sp5r; i += 5) {
         let r1 = 80 + sin(i * 10 + ph) * rdd2;
         t += seed;
-        if (strk > 0.7) x = cos(t - frameCount * 3) * 5;
-        else if (strk > 0.4) x = sin(t) * i / nrot;
+        if (strk >= 0.36) x = cos(t - frameCount * 3) * 5;
+        else if (strk >= 0.69) x = sin(t) * i / nrot;
         else x = sin(t) * r1 / rdiv;
         switch (true) {
             case (xinc <= 0.33):
