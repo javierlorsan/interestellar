@@ -310,6 +310,9 @@ function makeTl() {
                 case (fr <= 0.4):
                     fr = fr * 0.9;
                     break;
+                case (fr == 0.85):
+                    fr = fr * 0.4;
+                    break;
             }
         } else {
             switch (true) {
@@ -329,6 +332,9 @@ function makeTl() {
                     fr = fr * 0.8;
                     break;
                 case (fr == 0.3):
+                    fr = fr * 0.4;
+                    break;
+                case (fr == 0.85):
                     fr = fr * 0.4;
                     break;
             }
@@ -593,11 +599,11 @@ function shape2(ph, seed) {
         let x = cos(t) * r1;
         let y = sin(t) * r1;
         switch (true) {
-            case (xinc <= 0.33):
+            case (xinc <= 0.4):
                 if (cmin == cmax) curveVertex(x, y);
                 else vertex(x, y);
                 break;
-            case (xinc <= 0.7):
+            case (xinc <= 0.6):
                 img.strokeWeight(1);
                 img.line(x, y, 1, sz * 0.4);
                 break;
