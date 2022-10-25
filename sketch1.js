@@ -95,7 +95,7 @@ let yinc = R.random_num(0.01, 0.1);
 let xinc = R.random_dec();
 let pntcur = R.random_dec();
 let xelle = R.random_int(10, 20);
-let nrot = R.random_int(2, 15);
+let nrot = R.random_int(2, 17);
 let img2;
 let H1 = R.random_int(0, 53);
 let H2 = R.random_int(60, 150);
@@ -110,8 +110,8 @@ let rdd2 = R.random_choice([10, 20, 30, 40, 50, 60, 70, 80, 90]);
 let rdinc = R.random_int(2, 3);
 let cmin = R.random_int(1, 10);
 let cmax = R.random_int(1, 10);
-let sp1 = R.random_int(2, 8);
-let sp2 = R.random_int(2, 8);
+let sp1 = R.random_int(2, 13);
+let sp2 = R.random_int(2, 13);
 let angmlt = R.random_int(7, 21);
 let knum = R.random_choice([5, 10]);
 let rdiv = R.random_choice([1, 2]);
@@ -302,7 +302,7 @@ function makeTl() {
                     fr = fr * 3;
                     break;
                 case (fr == 0.23):
-                    fr = fr * 2;
+                    fr = fr * 1.6;
                     break;
                 case (fr <= 0.32):
                     fr = fr * 1.2;
@@ -344,7 +344,7 @@ function makeTl() {
     if (tipo == 3 || tipo == 5) fr = 0.1;
     if (tipo == 4) fr = 0.07;
 
-    console.log(' tipo:' + tipo + ' pntcur: ' + pntcur + ' - tpmd:' + tpmd + ' - xinc:' + xinc + ' - fr:' + fr + ' - strk:' + strk);
+    console.log(' tipo:' + tipo + ' pntcur: ' + pntcur + ' - tpmd:' + tpmd + ' - xinc:' + xinc + ' - nrot:' + nrot + ' - strk:' + strk);
     let radius = sz * 0.00;
     img.translate(sz * 1.2 / 2, sz / 2);
     img.fill(bgcolor);
