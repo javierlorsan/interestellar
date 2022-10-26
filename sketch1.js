@@ -116,6 +116,7 @@ let angmlt = R.random_int(7, 21);
 let knum = R.random_choice([5, 10]);
 let rdiv = R.random_choice([1, 2]);
 let sp5r = R.random_int(75, 105);
+let lnth = (strk > 0.1) ? strk : 0.5;
 
 function setup() {
 
@@ -215,8 +216,8 @@ function getTipo() {
     let tk = tkid.slice(-1);
     if (tk == '0') tk = 10;
     tk = Number(tk);
-    if (tk > 5) tk = tk - 5;
     if (tk == 6) tk = R.random_int(2, 5);
+    if (tk > 5) tk = tk - 5;
     return tk;
 }
 
@@ -344,7 +345,7 @@ function makeTl() {
     if (tipo == 3 || tipo == 5) fr = 0.1;
     if (tipo == 4) fr = 0.07;
 
-    console.log(' tipo:' + tipo + ' pntcur: ' + pntcur + ' - tpmd:' + tpmd + ' - xinc:' + xinc + ' - nrot:' + nrot + ' - strk:' + strk);
+    console.log(' tipo:' + tipo + ' pntcur: ' + pntcur + ' - tpmd:' + tpmd + ' - xinc:' + xinc + ' - tkid:' + tkid + ' - strk:' + strk);
     let radius = sz * 0.00;
     img.translate(sz * 1.2 / 2, sz / 2);
     img.fill(bgcolor);
@@ -464,7 +465,7 @@ class cshape {
                     shape1(this.x, this.y, this.rseed);
                     break;
                 case 2:
-                    shape2(this.ph, this.rseed);
+                    shape2(this.sz, this.ph, this.rseed);
                     this.ph += 0.05;
                     break;
                 case 3:
@@ -515,14 +516,20 @@ function shape5(ph, seed, sz) {
                 break;
         }
         switch (true) {
-            case (xinc <= 0.33):
+            case (xinc <= 0.25):
                 img.vertex(x, i * 2);
                 break;
-            case (xinc <= 0.66):
+            case (xinc <= 0.5):
                 img.rect(x, i * 2.5, 1, nrot);
                 break;
+            case (xinc <= 0.75):
+                img.strokeWeight(lnth);
+                img.noFill();
+                if (i % 2 == 0) img.arc(x, i * 3, sz * 1.5, sz * 1.5, PI * 0.75, PI);
+                else img.arc(-x, i * 1.5, sz * 1.5, sz * 1.5, 0, QUARTER_PI);
+                break;
             default:
-                img.strokeWeight(1);
+                img.strokeWeight(lnth);
                 img.line(x, i * 2.5, x, i * 3);
                 break;
         }
@@ -553,9 +560,14 @@ function shape4(sz, seed, ph) {
                     case (strk <= 0.4):
                         img.point(v.x, v.y);
                         break;
-                    case (strk <= 0.8):
-                        img.strokeWeight(1);
+                    case (strk <= 0.6):
+                        img.strokeWeight(lnth);
                         img.line(v.x, v.y, 1, sz*5);
+                        break;
+                    case (strk <= 0.8):
+                        img.strokeWeight(lnth);
+                        img.noFill();
+                        img.arc(v.x, v.y, sz * 1.5, sz * 1.5, 0, HALF_PI);
                         break;
                     default:
                         img.rect(v.x, v.y, 1, 1);
@@ -579,14 +591,19 @@ function shape3(sz, seed, ph) {
         let x = cos(t) * r1/rdiv;
         let y = sin(t) * r1;
         switch (true) {
-            case (xinc <= 0.33):
+            case (xinc <= 0.25):
                 if (cmin != cmax) curveVertex(x, y);
                 else vertex(x, y);
-            case (xinc <= 0.66):
+            case (xinc <= 0.5):
                 img.rect(x, y, 1, 1);
                 break;
+            case (xinc <= 0.75):
+                img.strokeWeight(lnth);
+                img.noFill();
+                img.arc(x, y, sz * 1.5, sz * 1.5, 0, HALF_PI);
+                break;
             default:
-                img.strokeWeight(1);
+                img.strokeWeight(lnth);
                 img.line(x, y, 1, sz * 5);
                 break;
         }
@@ -595,7 +612,7 @@ function shape3(sz, seed, ph) {
 }
 
 
-function shape2(ph, seed) {
+function shape2(sz, ph, seed) {
     if (strk >= 0.3) { t = t_rd }
     let pitau = (pntcur < 0.5) ? PI : TAU;
     img.rotate(pitau / nrot);
@@ -607,19 +624,23 @@ function shape2(ph, seed) {
         let x = cos(t) * r1;
         let y = sin(t) * r1;
         switch (true) {
-            case (xinc <= 0.4):
+            case (xinc <= 0.25):
                 if (cmin == cmax) curveVertex(x, y);
                 else vertex(x, y);
                 break;
-            case (xinc <= 0.6):
-                img.strokeWeight(1);
-                img.line(x, y, 1, sz * 0.4);
+            case (xinc <= 0.5):
+                img.strokeWeight(lnth);
+                img.line(x, y, 1, sz);
+                break;
+            case (xinc <= 0.75):
+                img.strokeWeight(lnth);
+                img.noFill();
+                img.arc(x, y, sz * 1.5, sz * 1.5, 0, HALF_PI);
                 break;
             default:
                 img.rect(x, y, 1, sz * 0.1);
                 break;
         }
-        
     }
     img.endShape(CLOSE);
 }
