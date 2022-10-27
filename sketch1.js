@@ -519,10 +519,10 @@ function shape5(ph, seed, sz) {
             case (xinc <= 0.2):
                 img.rect(x, i * 2.5, 1, nrot);
                 break;
-            case (xinc <= 0.5):
+            case (xinc <= 0.6):
                 img.vertex(x, i * 2);
                 break;
-            case (xinc <= 0.75):
+            case (xinc <= 0.8):
                 img.strokeWeight(lnth);
                 img.noFill();
                 if (i % 2 == 0) img.arc(x, i * 3, sz * 1.5, sz * 1.5, PI * 0.75, PI);
@@ -581,7 +581,8 @@ function shape4(sz, seed, ph) {
 }
 
 function shape3(sz, seed, ph) {
-    if (strk >= 0.3) { t = t_rd }
+    //if (strk >= 0.3) { t = t_rd }
+    t = t_rd;
     if (pntcur < 0.5) { img.rotate(PI / nrot); } else { img.rotate(TAU / nrot); }
     let increment = (PI * cmin) / nrot;
     img.beginShape();
@@ -594,10 +595,10 @@ function shape3(sz, seed, ph) {
             case (xinc <= 0.25):
                 if (cmin != cmax) curveVertex(x, y);
                 else vertex(x, y);
-            case (xinc <= 0.5):
+            case (xinc <= 0.4):
                 img.rect(x, y, 1, 1);
                 break;
-            case (xinc <= 0.75):
+            case (xinc <= 0.7):
                 img.strokeWeight(lnth);
                 img.noFill();
                 img.arc(x, y, sz * 1.5, sz * 1.5, 0, HALF_PI);
@@ -628,11 +629,11 @@ function shape2(sz, ph, seed) {
                 if (cmin == cmax) curveVertex(x, y);
                 else vertex(x, y);
                 break;
-            case (xinc <= 0.5):
+            case (xinc <= 0.55):
                 img.strokeWeight(lnth);
                 img.line(x, y, 1, sz);
                 break;
-            case (xinc <= 0.75):
+            case (xinc <= 0.8):
                 img.strokeWeight(lnth);
                 img.noFill();
                 img.arc(x, y, sz * 1.5, sz * 1.5, 0, HALF_PI);
