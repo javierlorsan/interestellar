@@ -498,7 +498,7 @@ class cshape {
 function shape5(ph, seed, sz) {
     let x;
     let pitau = (pntcur < 0.5) ? PI : TAU;
-    if (pntcur > 0.3) { t = t_rd }
+    if (pntcur > 0.5) { t = t_rd }
     img.rotate(pitau / nrot);
     img.beginShape();
     for (let i = 0; i < sp5r; i += 5) {
