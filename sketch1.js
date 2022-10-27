@@ -227,7 +227,7 @@ function makeTl() {
     let tipo = getTipo();//R.random_choice([1,3,2,4,5]);
     cmin = Math.min(cmin, cmax);
     cmax = Math.max(cmin, cmax);
-    if (tipo == 1 && rdpt <= 0.5) {
+    if (tipo == 1 && rdpt <= 0.65) {
         npoints = 490;
         spmode = R.random_choice([TRIANGLES, TRIANGLE_STRIP, QUADS])
     } else {
@@ -520,10 +520,10 @@ function shape5(ph, seed, sz) {
             case (xinc <= 0.2):
                 img.rect(x, i * 2.5, 1, nrot);
                 break;
-            case (xinc <= 0.6):
+            case (xinc <= 0.5):
                 img.vertex(x, i * 2);
                 break;
-            case (xinc <= 0.8):
+            case (xinc <= 0.7):
                 img.strokeWeight(lnth);
                 img.noFill();
                 if (i % 2 == 0) img.arc(x, i * 3, sz * 1.5, sz * 1.5, PI * 0.75, PI);
