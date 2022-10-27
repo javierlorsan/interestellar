@@ -117,6 +117,7 @@ let knum = R.random_choice([5, 10]);
 let rdiv = R.random_choice([1, 2]);
 let sp5r = R.random_int(75, 105);
 let lnth = (strk > 0.1) ? strk : 0.5;
+let shp5for = R.random_choice([5, 10, 15, 20]);
 
 function setup() {
 
@@ -501,7 +502,7 @@ function shape5(ph, seed, sz) {
     if (pntcur > 0.5) { t = t_rd }
     img.rotate(pitau / nrot);
     img.beginShape();
-    for (let i = 0; i < sp5r; i += 5) {
+    for (let i = 0; i < sp5r; i += shp5for) {
         let r1 = 80 + sin(i * 10 + ph) * rdd2;
         t += seed;
         switch (true) {
