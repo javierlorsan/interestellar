@@ -614,7 +614,7 @@ function shape3(sz, seed, ph) {
 
 
 function shape2(sz, ph, seed) {
-    if (strk >= 0.3) { t = t_rd }
+    if (strk >= 0.1) { t = t_rd }
     let pitau = (pntcur < 0.5) ? PI : TAU;
     img.rotate(pitau / nrot);
     let increment = pitau / rdinc;
@@ -631,12 +631,12 @@ function shape2(sz, ph, seed) {
                 break;
             case (xinc <= 0.55):
                 img.strokeWeight(lnth);
-                img.line(x, y, 1, sz);
+                img.line(x, y, 1, sz * 2);
                 break;
             case (xinc <= 0.8):
                 img.strokeWeight(lnth);
                 img.noFill();
-                img.arc(x, y, sz * 1.5, sz * 1.5, 0, HALF_PI);
+                img.arc(x, y, sz * 2, sz * 2, 0, HALF_PI);
                 break;
             default:
                 img.rect(x, y, 1, sz * 0.1);
