@@ -503,17 +503,19 @@ function shape5(ph, seed, sz) {
     img.rotate(pitau / nrot);
     img.beginShape();
     for (let i = 0; i < sp5r; i += shp5for) {
-        let r1 = 80 + sin(i * 10 + ph) * rdd2;
+        //let r1 = 80 + sin(i * 10 + ph) * rdd2;
+        let r1 = (w / rdd1) + sin(i * 10 + ph) * rdd2;
         t += seed;
         switch (true) {
-            case (strk >= 0.36):
-                x = cos(t - frameCount * 3) * 5;
-                break;
             case (strk >= 0.69):
-                x = sin(t) * i / nrot;
+                x = cos(t - frameCount * 3) * r1;//5;
+                break;
+            case (strk >= 0.36):
+                x = sin(t) * (i / 35) * r1;
+                //x = sin(t) * i / nrot
                 break;
             default:
-                x = sin(t) * r1 / rdiv;
+                x = sin(t) * r1;// / rdiv;
                 break;
         }
         switch (true) {
@@ -523,7 +525,7 @@ function shape5(ph, seed, sz) {
             case (xinc <= 0.5):
                 img.vertex(x, i * 2);
                 break;
-            case (xinc <= 0.7):
+            case (xinc <= 0.65):
                 img.strokeWeight(lnth);
                 img.noFill();
                 if (i % 2 == 0) img.arc(x, i * 3, sz * 1.5, sz * 1.5, PI * 0.75, PI);
@@ -593,13 +595,13 @@ function shape3(sz, seed, ph) {
         let x = cos(t) * r1/rdiv;
         let y = sin(t) * r1;
         switch (true) {
-            case (xinc <= 0.25):
+            case (xinc <= 0.2):
                 if (cmin != cmax) curveVertex(x, y);
                 else vertex(x, y);
             case (xinc <= 0.4):
                 img.rect(x, y, 1, 1);
                 break;
-            case (xinc <= 0.7):
+            case (xinc <= 0.65):
                 img.strokeWeight(lnth);
                 img.noFill();
                 img.arc(x, y, sz * 1.5, sz * 1.5, 0, HALF_PI);
@@ -626,7 +628,7 @@ function shape2(sz, ph, seed) {
         let x = cos(t) * r1;
         let y = sin(t) * r1;
         switch (true) {
-            case (xinc <= 0.25):
+            case (xinc <= 0.2):
                 if (cmin == cmax) curveVertex(x, y);
                 else vertex(x, y);
                 break;
@@ -634,7 +636,7 @@ function shape2(sz, ph, seed) {
                 img.strokeWeight(lnth);
                 img.line(x, y, 1, sz * 2);
                 break;
-            case (xinc <= 0.8):
+            case (xinc <= 0.85):
                 img.strokeWeight(lnth);
                 img.noFill();
                 img.arc(x, y, sz * 2, sz * 2, 0, HALF_PI);
