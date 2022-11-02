@@ -596,13 +596,13 @@ function shape3(sz, seed, ph) {
         let x = cos(t) * r1/rdiv;
         let y = sin(t) * r1;
         switch (true) {
-            case (xinc <= 0.2):
+            case (xinc <= 0.25):
                 if (cmin != cmax) curveVertex(x, y);
                 else vertex(x, y);
-            case (xinc <= 0.4):
+            case (xinc <= 0.45):
                 img.rect(x, y, 1, 1);
                 break;
-            case (xinc <= 0.65):
+            case (xinc <= 0.7):
                 img.strokeWeight(lnth);
                 img.noFill();
                 img.arc(x, y, sz * 1.5, sz * 1.5, 0, HALF_PI);
