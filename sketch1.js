@@ -133,6 +133,7 @@ function setup() {
     let ncols = 10;
     let c;
     let rdc = R.random_int(0, 5000);
+    let pxsw = R.random_num(0.5, 1)
 
     while (pxs.length < 5000) {
         let x = random(w);
@@ -145,7 +146,7 @@ function setup() {
             else {
                 c = color(255, adj, 0);
             }
-            pxs.push(new Pxl(x, y, c));
+            pxs.push(new Pxl(x, y, c, pxsw));
         }
     }
 
@@ -708,11 +709,12 @@ function draw() {
 }
 
 class Pxl {
-    constructor(x, y, c) {
+    constructor(x, y, c, sw) {
         this.x = x;
         this.y = y;
         this.col = c;
         this.inc = 0;
+        this.sw = sw;
     }
 
     update() {
@@ -725,7 +727,7 @@ class Pxl {
     display() {
         if (this.x > 0 && this.x < w && this.y > 0 && this.y < sz && dist(this.x, this.y, w / 2, sz / 2) > w * 0.30) {
             stroke(this.col);
-            strokeWeight(1);
+            strokeWeight(this.sw);
             point(this.x, this.y);
         }
     }
