@@ -218,7 +218,7 @@ function getTipo() {
     let tk = tkid.slice(-1);
     if (tk == '0') tk = 10;
     tk = Number(tk);
-    if (tk == 6) tk = R.random_int(2, 5);
+    //if (tk == 6) tk = R.random_int(2, 5);
     if (tk > 5) tk = tk - 5;
     return tk;
 }
@@ -228,7 +228,7 @@ function makeTl() {
     let tipo = getTipo();//R.random_choice([1,3,2,4,5]);
     cmin = Math.min(cmin, cmax);
     cmax = Math.max(cmin, cmax);
-    if (tipo == 1 && rdpt <= 0.65) {
+    if (tipo == 1 && rdpt <= 0.5) {
         npoints = 490;
         spmode = R.random_choice([TRIANGLES, TRIANGLE_STRIP, QUADS])
     } else {
