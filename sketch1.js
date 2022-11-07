@@ -296,8 +296,6 @@ function makeTl() {
         }
     }
 
-    console.log(fr);
-
     if (tipo == 2) {
         if (rdinc == 2) {
             switch (true) {
@@ -347,7 +345,9 @@ function makeTl() {
     if (tipo == 3 || tipo == 5) fr = 0.1;
     if (tipo == 4) fr = 0.07;
 
-    console.log(' tipo:' + tipo + ' pntcur: ' + pntcur + ' - tpmd:' + tpmd + ' - xinc:' + xinc + ' - tkid:' + tkid + ' - strk:' + strk);
+    console.log(' tipo:' + tipo + ' pntcur: ' + pntcur + ' - rdiv:' + rdiv + ' - xinc:' + xinc + ' - tkid:' + tkid + ' - strk:' + strk);
+
+    console.log(t_rd + ' ' + tp);
     let radius = sz * 0.00;
     img.translate(sz * 1.2 / 2, sz / 2);
     img.fill(bgcolor);
@@ -449,7 +449,7 @@ class cshape {
         img.strokeWeight(this.sz);
         img.rotate(radians(this.ang));
 
-        if (this.np > 200) {
+        if (this.np > 200 && this.tipo == 1) {
             if (strk > 0.7) {
                 if (floor(this.x / this.sz * this.n) % 2 == 0) { img.blendMode(bm1); }
                 else { img.blendMode(bm2); }
@@ -547,6 +547,7 @@ function shape4(sz, seed, ph) {
     const xyFreq = 0.0005;
     let r1;
     V = p5.Vector;
+    if (strk > 0.4 && strk < 0.5) t = t_rd;
     for (let i = 0; i < circleDiv; i++) {
         for (let j = 0; j < TAU / circleDiv; j += circleStep) {
             if (xinc >= 0.5)  r1 = (sz * 3) + sin(angle * 10 + ph) * rdd2;
@@ -587,14 +588,15 @@ function shape4(sz, seed, ph) {
 function shape3(sz, seed, ph) {
     //if (strk >= 0.3) { t = t_rd }
     t = t_rd;
+    let muldiv = (xinc <= 0.5) ? 1.2 : rdinc;
     if (pntcur < 0.5) { img.rotate(PI / nrot); } else { img.rotate(TAU / nrot); }
     let increment = (PI * cmin) / nrot;
     img.beginShape();
     for (let ang = 0; ang < PI * cmax; ang += increment) {
         let r1 = (sz * 3) + sin(ang * 10 + ph) * rdd2;
         t += seed;
-        let x = cos(t) * r1/rdiv;
-        let y = sin(t) * r1;
+        let x = cos(t) * r1 / muldiv;
+        let y = sin(t) * r1 * muldiv;
         switch (true) {
             case (xinc <= 0.25):
                 if (cmin != cmax) curveVertex(x, y);
