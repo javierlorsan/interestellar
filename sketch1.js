@@ -228,7 +228,7 @@ function makeTl() {
     let tipo = getTipo();//R.random_choice([1,3,2,4,5]);
     cmin = Math.min(cmin, cmax);
     cmax = Math.max(cmin, cmax);
-    if (tipo == 1 && rdpt <= 0.5) {
+    if (tipo == 1 && rdpt < 0.65) {
         npoints = 490;
         spmode = R.random_choice([TRIANGLES, TRIANGLE_STRIP, QUADS])
     } else {
