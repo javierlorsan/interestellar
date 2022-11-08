@@ -1,7 +1,7 @@
 # interstellar
 A journey through the universe 
 
-Interstellar is a journey through the universe observing stars, planets, singularities such as black holes and other celestial objects never seen before that are billions light years from earth. Some of them can be stereoscopic and others can give a three-dimensional feeling. Sometimes the journey can be slower due to the strong gravitational pull of some of them. Sometimes we will pass very close and you have to be very careful because they can explode. Go now into deep space.
+Interstellar is a journey through the universe observing stars, planets, constellations, singularities such as black holes and other celestial objects never seen before that are billions light years from earth. Some of them can be stereoscopic and others can give a three-dimensional feeling. Sometimes the journey can be slower due to the strong gravitational pull of some of them. Sometimes we will pass very close and you have to be very careful because they can explode. Go now into deep space.
 
 Black holes are originating from the cold remains of ancient stars, they are so dense that no material particle, not even light, is capable of escaping their powerful gravitational force.
 
@@ -15,4 +15,4 @@ I have always been fascinated by these singularities, especially, because inside
 
 “The Universe is written in a mathematical code” Galileo.
 
-Just press “s” key or mouse click and enjoy the journey watching stars, planets, black holes rotating and changing shape and celestial objects never seen. You can pause the journey when ever you want pressing “space bar” or mouse click and press “s” or mouse click again to continue (Sometimes the journey can take a few seconds to start).
+Just press “s” key or mouse click and enjoy the journey watching stars, planets, constellations, black holes rotating and changing shape and other celestial objects never seen. You can pause the journey when ever you want pressing “space bar” or mouse click and press “s” or mouse click again to continue (Sometimes the journey can take a few seconds to start).
