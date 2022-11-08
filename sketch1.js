@@ -347,7 +347,7 @@ function makeTl() {
 
     console.log(' tipo:' + tipo + ' pntcur: ' + pntcur + ' - rdiv:' + rdiv + ' - xinc:' + xinc + ' - tkid:' + tkid + ' - strk:' + strk);
 
-    console.log(t_rd + ' ' + tp);
+    //console.log(t_rd + ' ' + tp);
     let radius = sz * 0.00;
     img.translate(sz * 1.2 / 2, sz / 2);
     img.fill(bgcolor);
@@ -500,19 +500,22 @@ class cshape {
 function shape5(ph, seed, sz) {
     let x;
     let pitau = (pntcur < 0.5) ? PI : TAU;
-    if (pntcur > 0.5) { t = t_rd }
+    if (xinc <= 0.4) {
+        if (pntcur > 0.4) { t = t_rd }
+    } else {
+        if (pntcur > 0.85) { t = t_rd }
+    }
     img.rotate(pitau / nrot);
     img.beginShape();
     for (let i = 0; i < sp5r; i += shp5for) {
-        //let r1 = 80 + sin(i * 10 + ph) * rdd2;
         let r1 = (w / rdd1) + sin(i * 10 + ph) * rdd2;
         t += seed;
         switch (true) {
             case (strk >= 0.69):
-                x = cos(t - frameCount * 3) * r1;//5;
+                x = cos(t - frameCount * 3) * r1;
                 break;
             case (strk >= 0.36):
-                x = sin(t) * (i / 35) * r1;
+                x = sin(t) * (i / 100) * r1;
                 //x = sin(t) * i / nrot
                 break;
             default:
@@ -520,13 +523,14 @@ function shape5(ph, seed, sz) {
                 break;
         }
         switch (true) {
-            case (xinc <= 0.2):
+            case (xinc <= 0.15):
                 img.rect(x, i * 2.5, 1, nrot);
                 break;
-            case (xinc <= 0.5):
-                img.vertex(x, i * 2);
+            case (xinc <= 0.4):
+                if (cmin != cmax) img.vertex(x, i * 2);
+                else img.curveVertex(x, i * 2);
                 break;
-            case (xinc <= 0.65):
+            case (xinc <= 0.55):
                 img.strokeWeight(lnth);
                 img.noFill();
                 if (i % 2 == 0) img.arc(x, i * 3, sz * 1.5, sz * 1.5, PI * 0.75, PI);
@@ -599,12 +603,12 @@ function shape3(sz, seed, ph) {
         let y = sin(t) * r1 * muldiv;
         switch (true) {
             case (xinc <= 0.25):
-                if (cmin != cmax) curveVertex(x, y);
-                else vertex(x, y);
-            case (xinc <= 0.50):
-                img.rect(x, y, 1, 1);
+                if (cmin != cmax) img.curveVertex(x, y);
+                else img.vertex(x, y);
+            case (xinc <= 0.35):
+                img.rect(x, y, 1, nrot);
                 break;
-            case (xinc <= 0.75):
+            case (xinc <= 0.6):
                 img.strokeWeight(lnth);
                 img.noFill();
                 img.arc(x, y, sz * 1.5, sz * 1.5, 0, HALF_PI);
