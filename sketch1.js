@@ -590,10 +590,12 @@ function shape4(sz, seed, ph) {
 }
 
 function shape3(sz, seed, ph) {
-    //if (strk >= 0.3) { t = t_rd }
-    t = t_rd;
-    let muldiv = (xinc <= 0.5) ? 1.2 : rdinc;
-    if (pntcur < 0.5) { img.rotate(PI / nrot); } else { img.rotate(TAU / nrot); }
+    if (xinc > 0.6) {
+        if (strk >= 0.5) t = t_rd
+    } else { t = t_rd; }
+    let muldiv = (xinc <= 0.6) ? 1.2 : rdinc;
+    if (xinc > 0.35) { if (pntcur < 0.2) { img.rotate(PI / nrot); } else { img.rotate(TAU / nrot); } }
+    else { if (pntcur < 0.5) { img.rotate(PI / nrot); } else { img.rotate(TAU / nrot); } }
     let increment = (PI * cmin) / nrot;
     img.beginShape();
     for (let ang = 0; ang < PI * cmax; ang += increment) {
@@ -611,11 +613,17 @@ function shape3(sz, seed, ph) {
             case (xinc <= 0.6):
                 img.strokeWeight(lnth);
                 img.noFill();
-                img.arc(x, y, sz * 1.5, sz * 1.5, 0, HALF_PI);
+                if (cmin != cmax) {
+                    let farc = (strk < 0.5) ? PI : HALF_PI;
+                    img.arc(x, y, sz * 1.5, sz * 1.5, 0, farc);
+                } else {
+                    img.arc(x, i * 6, sz * 4, sz * 4, PI * 0.75, PI);
+                    img.arc(-x, i * 9, sz * 4, sz * 4, 0, QUARTER_PI);
+                }
                 break;
             default:
                 img.strokeWeight(lnth);
-                img.line(x, y, 1, sz * 5);
+                img.line(x, y, 1, sz * 3);
                 break;
         }
     }
@@ -635,18 +643,23 @@ function shape2(sz, ph, seed) {
         let x = cos(t) * r1;
         let y = sin(t) * r1;
         switch (true) {
-            case (xinc <= 0.2):
+            case (xinc <= 0.15):
                 if (cmin == cmax) curveVertex(x, y);
                 else vertex(x, y);
                 break;
             case (xinc <= 0.55):
                 img.strokeWeight(lnth);
-                img.line(x, y, 1, sz * 2);
+                img.line(x, y, 1, sz * 1.5);
                 break;
             case (xinc <= 0.85):
                 img.strokeWeight(lnth);
                 img.noFill();
-                img.arc(x, y, sz * 2, sz * 2, 0, HALF_PI);
+                if (cmin != cmax) {
+                    img.arc(x, y, sz * 2, sz * 2, 0, QUARTER_PI);
+                } else {
+                    img.arc(x, i * 2, sz*2, sz * 3, PI * 0.75, PI);
+                    img.arc(-x, i * 2, sz*2, sz * 3, 0, QUARTER_PI);
+                }
                 break;
             default:
                 img.rect(x, y, 1, sz * 0.1);
