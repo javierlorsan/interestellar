@@ -503,7 +503,7 @@ function shape5(ph, seed, sz) {
     if (xinc <= 0.4) {
         if (pntcur > 0.4) { t = t_rd }
     } else {
-        if (pntcur > 0.85) { t = t_rd }
+        if (pntcur > 0.9) { t = t_rd }
     }
     img.rotate(pitau / nrot);
     img.beginShape();
