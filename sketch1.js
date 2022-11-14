@@ -86,6 +86,7 @@ let incirc = (70000 * Math.floor(sz * preduc)) / 1000;
 let mot = false;
 let pxs = [];
 let t_rd = R.random_num(10000, 53600);
+//let t_rd = R.random_num(-360, 360);
 let strcol = ["#0A1B28", "#071F43", "#357D7E", "#35EEEE", "#919DF0"];
 let bModes = [];
 let bm1, bm2;
@@ -118,9 +119,17 @@ let rdiv = R.random_choice([1, 2]);
 let sp5r = R.random_int(75, 105);
 let lnth = (strk > 0.2) ? strk : 0.5;
 let shp5for = R.random_choice([5, 10, 15, 20]);
+let sh2ln = R.random_choice([1, 25, 50, 75, 100]);
 
 function setup() {
 
+    if (localStorage.tkid) {
+        tkid = Number(localStorage.tkid) + 1
+        localStorage.tkid = tkid
+    } else {
+        localStorage.tkid = tkid;
+    }
+    console.log(tkid);
     createCanvas(sz * 1.2, sz);
     img = createGraphics(sz * 1.2, sz);
     img2 = createGraphics(sz * 1.2, sz);
@@ -215,10 +224,10 @@ function genTokenData(projectNum) {
 
 function getTipo() {
 
-    let tk = tkid.slice(-1);
+    let tk = tkid.toString().slice(-1);
     if (tk == '0') tk = 10;
     tk = Number(tk);
-    if (tk == 6) tk = R.random_int(1, 5);
+    //if (tk == 6) tk = R.random_int(2, 5);
     if (tk > 5) tk = tk - 5;
     return tk;
 }
@@ -226,6 +235,7 @@ function getTipo() {
 function makeTl() {
 
     let tipo = getTipo();//R.random_choice([1,3,2,4,5]);
+    //xinc = 0.3;
     cmin = Math.min(cmin, cmax);
     cmax = Math.max(cmin, cmax);
     if (tipo == 1 && rdpt < 0.65) {
@@ -247,8 +257,9 @@ function makeTl() {
 
     bm1 = R.random_choice(bModes);
     bm2 = R.random_choice(bModes);
-    //console.log(bm1 + ' - ' + bm2)
 
+    if (tipo == 3 && xinc > 0.7) { if (pntcur < 0.5) { nrot = R.random_int(2, 6); } else { nrot = R.random_int(2, 10); } }
+    if (tipo == 2 && (xinc > 0.55 && xinc <= 0.85)) { if (pntcur < 0.5) { nrot = R.random_int(3, 10); } }
     if ((bm1 == 'screen' && bm2 == 'lighten') || (bm1 == 'lighten' && bm2 == 'screen') || (bm1 == 'color-burn' && bm2 == 'screen') || (bm1 == 'screen' && bm2 == 'color-burn') || (bm1 == 'hard-light' && bm2 == 'screen') || bm1 == bm2) bm2 = 'source-over';
 
     let fr = 0.32;
@@ -345,7 +356,7 @@ function makeTl() {
     if (tipo == 3 || tipo == 5) fr = 0.1;
     if (tipo == 4) fr = 0.07;
 
-    console.log(' tipo:' + tipo + ' pntcur: ' + pntcur + ' - rdiv:' + rdiv + ' - xinc:' + xinc + ' - tkid:' + tkid + ' - strk:' + strk);
+    console.log(' tipo:' + tipo + ' pntcur: ' + pntcur + ' - rdiv:' + rdiv + ' - xinc:' + xinc + ' - nrot:' + nrot + ' - strk:' + strk);
 
     //console.log(t_rd + ' ' + tp);
     let radius = sz * 0.00;
@@ -503,7 +514,7 @@ function shape5(ph, seed, sz) {
     if (xinc <= 0.4) {
         if (pntcur > 0.4) { t = t_rd }
     } else {
-        if (pntcur > 0.9) { t = t_rd }
+        if (pntcur > 0.95) { t = t_rd }
     }
     img.rotate(pitau / nrot);
     img.beginShape();
@@ -526,16 +537,16 @@ function shape5(ph, seed, sz) {
             case (xinc <= 0.15):
                 img.rect(x, i * 2.5, 1, nrot);
                 break;
-            case (xinc <= 0.4):
+            case (xinc <= 0.5):
                 if (cmin != cmax) img.vertex(x, i * 2);
                 else img.curveVertex(x, i * 2);
                 break;
-            case (xinc <= 0.55):
+            /*case (xinc <= 0.55):
                 img.strokeWeight(lnth);
                 img.noFill();
                 if (i % 2 == 0) img.arc(x, i * 3, sz * 1.5, sz * 1.5, PI * 0.75, PI);
                 else img.arc(-x, i * 1.5, sz * 1.5, sz * 1.5, 0, QUARTER_PI);
-                break;
+                break;*/
             default:
                 img.strokeWeight(lnth);
                 img.line(x, i * 2.5, x, i * 3);
@@ -579,7 +590,8 @@ function shape4(sz, seed, ph) {
                         img.arc(v.x, v.y, sz * 1.5, sz * 1.5, 0, HALF_PI);
                         break;
                     default:
-                        img.rect(v.x, v.y, 1, 1);
+                        if (pntcur > 0.5) img.rect(v.x, v.y, 1, 1);
+                        else img.rect(v.x, v.y, 0, 1);
                         break;
                 }
             }
@@ -590,27 +602,37 @@ function shape4(sz, seed, ph) {
 }
 
 function shape3(sz, seed, ph) {
-    if (xinc > 0.6) {
+    let x, y;
+    if (xinc > 0.7) {
         if (strk >= 0.5) t = t_rd
     } else { t = t_rd; }
-    let muldiv = (xinc <= 0.6) ? 1.2 : rdinc;
-    if (xinc > 0.35) { if (pntcur < 0.2) { img.rotate(PI / nrot); } else { img.rotate(TAU / nrot); } }
+    let muldiv = (xinc > 0.4) ? 1.5 : 1; //rdinc;
+    if (xinc > 0.4) { if (pntcur < 0.5) { img.rotate(PI / nrot); } else { img.rotate(TAU / nrot); } }
     else { if (pntcur < 0.5) { img.rotate(PI / nrot); } else { img.rotate(TAU / nrot); } }
     let increment = (PI * cmin) / nrot;
     img.beginShape();
     for (let ang = 0; ang < PI * cmax; ang += increment) {
         let r1 = (sz * 3) + sin(ang * 10 + ph) * rdd2;
         t += seed;
-        let x = cos(t) * r1 / muldiv;
-        let y = sin(t) * r1 * muldiv;
+        if (xinc > 0.3 && rdiv == 1) {
+            x = cos(t) * r1 * muldiv;
+            y = sin(t) * r1 / muldiv;
+        } else {
+            x = cos(t) * r1 / muldiv;
+            y = sin(t) * r1 * muldiv;
+        }
         switch (true) {
-            case (xinc <= 0.25):
+            case (xinc <= 0.15):
                 if (cmin != cmax) img.curveVertex(x, y);
                 else img.vertex(x, y);
-            case (xinc <= 0.35):
-                img.rect(x, y, 1, nrot);
+            case (xinc <= 0.4):
+                img.rect(x, y, 0, rdiv);
                 break;
-            case (xinc <= 0.6):
+            case (xinc <= 0.70):
+                img.strokeWeight(lnth);
+                img.line(x, y, 1, sz * 3);
+                break;
+            default:
                 img.strokeWeight(lnth);
                 img.noFill();
                 if (cmin != cmax) {
@@ -620,10 +642,6 @@ function shape3(sz, seed, ph) {
                     img.arc(x, i * 6, sz * 4, sz * 4, PI * 0.75, PI);
                     img.arc(-x, i * 9, sz * 4, sz * 4, 0, QUARTER_PI);
                 }
-                break;
-            default:
-                img.strokeWeight(lnth);
-                img.line(x, y, 1, sz * 3);
                 break;
         }
     }
@@ -649,20 +667,21 @@ function shape2(sz, ph, seed) {
                 break;
             case (xinc <= 0.55):
                 img.strokeWeight(lnth);
-                img.line(x, y, 1, sz * 1.5);
+                img.line(x, y, sh2ln, sz * 1.5);
                 break;
             case (xinc <= 0.85):
                 img.strokeWeight(lnth);
                 img.noFill();
                 if (cmin != cmax) {
-                    img.arc(x, y, sz * 2, sz * 2, 0, QUARTER_PI);
+                    img.arc(x, y, sz*2, sz * 3, PI * 0.75, PI);
+                    img.arc(-x, y, sz * 2, sz * 3, 0, QUARTER_PI);
                 } else {
                     img.arc(x, i * 2, sz*2, sz * 3, PI * 0.75, PI);
                     img.arc(-x, i * 2, sz*2, sz * 3, 0, QUARTER_PI);
                 }
                 break;
             default:
-                img.rect(x, y, 1, sz * 0.1);
+                img.rect(x, y, 100 - (r1 * 0.5), sz * 0.1);
                 break;
         }
     }
