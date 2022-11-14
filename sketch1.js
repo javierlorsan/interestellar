@@ -235,14 +235,14 @@ function getTipo() {
 function makeTl() {
 
     let tipo = getTipo();//R.random_choice([1,3,2,4,5]);
-    //xinc = 0.3;
+    //strk = 0.3;
     cmin = Math.min(cmin, cmax);
     cmax = Math.max(cmin, cmax);
     if (tipo == 1 && rdpt < 0.55) {
         npoints = 490;
         spmode = R.random_choice([TRIANGLES, TRIANGLE_STRIP, QUADS])
     } else {
-        npoints = R.random_int(900, 3200);
+        npoints = R.random_int(1000, 3200);
     }
 
     img.noiseSeed(floor(R.random_num(0, 10e6)));
@@ -690,7 +690,7 @@ function shape2(sz, ph, seed) {
 
 
 function shape1(ox, oy, seed) {
-    if (strk > 0.7) { t = t_rd }
+    if (strk > 0.9) { t = t_rd }
     if (xinc > 0.35) { img.rotate(PI / nrot); }
     img.beginShape(spmode);
     for (let i = 0; i < 15; i++) {
