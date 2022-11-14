@@ -661,7 +661,7 @@ function shape2(sz, ph, seed) {
         let x = cos(t) * r1;
         let y = sin(t) * r1;
         switch (true) {
-            case (xinc <= 0.15):
+            case (xinc <= 0.2):
                 if (cmin == cmax) curveVertex(x, y);
                 else vertex(x, y);
                 break;
@@ -669,7 +669,7 @@ function shape2(sz, ph, seed) {
                 img.strokeWeight(lnth);
                 img.line(x, y, sh2ln, sz * 1.5);
                 break;
-            case (xinc <= 0.85):
+            case (xinc <= 0.8):
                 img.strokeWeight(lnth);
                 img.noFill();
                 if (cmin != cmax) {
