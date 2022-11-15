@@ -683,7 +683,7 @@ function shape2(sz, ph, seed) {
                 img.strokeWeight(lnth);
                 img.line(x, y, sh2ln, sz * 1.5);
                 break;
-            case (xinc <= 0.8):
+            case (xinc <= 0.85):
                 img.strokeWeight(lnth);
                 img.noFill();
                 if (cmin != cmax) {
