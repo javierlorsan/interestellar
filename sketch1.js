@@ -236,7 +236,7 @@ function makeTl() {
 
     let tipo = getTipo();
     let tp;
-    //strk = 0.3;
+    //xinc = 0.9;
     cmin = Math.min(cmin, cmax);
     cmax = Math.max(cmin, cmax);
     if (tipo == 1 && rdpt < 0.4) {
@@ -370,7 +370,7 @@ function makeTl() {
     if (tipo == 3 || tipo == 5) fr = 0.1;
     if (tipo == 4) fr = 0.07;
 
-    console.log(' tipo:' + tipo + ' pntcur: ' + pntcur + ' - rdiv:' + rdiv + ' - xinc:' + xinc + ' - nrot:' + nrot + ' - strk:' + strk);
+    console.log(' tipo:' + tipo + ' pntcur: ' + pntcur + ' - rdiv:' + rdiv + ' - xinc:' + xinc + ' - nrot:' + nrot + ' - strk:' + strk + ' - t_rd:' + t_rd);
 
     //console.log(t_rd + ' ' + tp);
     let radius = sz * 0.00;
@@ -664,7 +664,7 @@ function shape3(sz, seed, ph) {
 
 
 function shape2(sz, ph, seed) {
-    if (strk >= 0.1) { t = t_rd }
+    if (strk >= 0.06) { t = t_rd }
     let pitau = (pntcur < 0.5) ? PI : TAU;
     img.rotate(pitau / nrot);
     let increment = pitau / rdinc;
