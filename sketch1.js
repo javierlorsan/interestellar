@@ -129,7 +129,7 @@ function setup() {
     } else {
         localStorage.tkid = tkid;
     }
-    console.log(tkid);
+
     createCanvas(sz * 1.2, sz);
     img = createGraphics(sz * 1.2, sz);
     img2 = createGraphics(sz * 1.2, sz);
@@ -234,11 +234,12 @@ function getTipo() {
 
 function makeTl() {
 
-    let tipo = getTipo();//R.random_choice([1,3,2,4,5]);
+    let tipo = getTipo();
+    let tp;
     //strk = 0.3;
     cmin = Math.min(cmin, cmax);
     cmax = Math.max(cmin, cmax);
-    if (tipo == 1 && rdpt < 0.55) {
+    if (tipo == 1 && rdpt < 0.4) {
         npoints = 490;
         spmode = R.random_choice([TRIANGLES, TRIANGLE_STRIP, QUADS])
     } else {
@@ -263,7 +264,20 @@ function makeTl() {
     if ((bm1 == 'screen' && bm2 == 'lighten') || (bm1 == 'lighten' && bm2 == 'screen') || (bm1 == 'color-burn' && bm2 == 'screen') || (bm1 == 'screen' && bm2 == 'color-burn') || (bm1 == 'hard-light' && bm2 == 'screen') || bm1 == bm2) bm2 = 'source-over';
 
     let fr = 0.32;
-    let tp = R.random_choice(steps);
+    /*if (tipo == 1) {
+        if (localStorage.shp1) {
+            let stidx = Number(localStorage.shp1) + 1;
+            if (stidx >= steps.length) stidx = 0;
+            tp = steps[stidx];
+            localStorage.shp1 = stidx
+            console.log(localStorage.shp1);
+        } else {
+            tp = steps[0];
+            localStorage.shp1 = 0;
+        }
+    } else {*/
+    tp = R.random_choice(steps);
+    //}
     if (shm.indexOf(tp) != -1) { fr = 0.4; }
     else if (shp.indexOf(tp) != -1) { fr = 0.54; }
     else if (shmp.indexOf(tp) != -1) {
