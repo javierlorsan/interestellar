@@ -236,7 +236,7 @@ function makeTl() {
 
     let tipo = getTipo();
     let tp;
-    //xinc = 0.7;
+    //xinc = 0.3;
     cmin = Math.min(cmin, cmax);
     cmax = Math.max(cmin, cmax);
     if (tipo == 1 && rdpt < 0.4) {
@@ -636,7 +636,7 @@ function shape3(sz, seed, ph) {
             y = sin(t) * r1 * muldiv;
         }
         switch (true) {
-            case (xinc <= 0.15):
+            case (xinc <= 0.1):
                 if (cmin != cmax) img.curveVertex(x, y);
                 else img.vertex(x, y);
             case (xinc <= 0.4):
