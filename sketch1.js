@@ -236,7 +236,7 @@ function makeTl() {
 
     let tipo = getTipo();
     let tp;
-    //xinc = 0.9;
+    //xinc = 0.7;
     cmin = Math.min(cmin, cmax);
     cmax = Math.max(cmin, cmax);
     if (tipo == 1 && rdpt < 0.4) {
@@ -525,10 +525,10 @@ class cshape {
 function shape5(ph, seed, sz) {
     let x;
     let pitau = (pntcur < 0.5) ? PI : TAU;
-    if (xinc <= 0.4) {
-        if (pntcur > 0.4) { t = t_rd }
+    if (xinc <= 0.6) {
+        t = t_rd;
     } else {
-        if (pntcur > 0.95) { t = t_rd }
+        if (pntcur > 0.97) { t = t_rd }
     }
     img.rotate(pitau / nrot);
     img.beginShape();
@@ -551,7 +551,7 @@ function shape5(ph, seed, sz) {
             case (xinc <= 0.15):
                 img.rect(x, i * 2.5, 1, nrot);
                 break;
-            case (xinc <= 0.5):
+            case (xinc <= 0.6):
                 if (cmin != cmax) img.vertex(x, i * 2);
                 else img.curveVertex(x, i * 2);
                 break;
