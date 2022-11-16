@@ -1,7 +1,7 @@
 # interstellar
 A journey through the universe 
 
-Interstellar is a journey through the universe observing stars, planets, constellations, nebulae, singularities such as black holes and other celestial objects never seen before that are billions light years from earth. Some of them can be stereoscopic and others can give a three-dimensional feeling. Sometimes the journey can be slower due to the strong gravitational pull of some of them. Sometimes we will pass very close and you have to be very careful because they can explode. Go now into deep space.
+Interstellar is a journey through the universe observing stars, planets, constellations, nebulae, singularities such as black holes and other celestial objects never seen before that are billions light years from earth. Some of them can be stereoscopic and others can give a three-dimensional feeling. Sometimes the journey can be slower due to the strong gravitational pull of some of them. Sometimes we will pass very close and you have to be very careful because they can explode. Go now into deep space, may even be possible to see some alien ship too.
 
 Black holes are originating from the cold remains of ancient stars, they are so dense that no material particle, not even light, is capable of escaping their powerful gravitational force.
 
