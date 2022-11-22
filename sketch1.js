@@ -120,6 +120,7 @@ let sp5r = R.random_int(75, 105);
 let lnth = (strk > 0.2) ? strk : 0.5;
 let shp5for = R.random_choice([5, 10, 15, 20]);
 let sh2ln = R.random_choice([1, 25, 50, 75, 100]);
+let plpt = 5000;
 
 function setup() {
 
@@ -128,6 +129,12 @@ function setup() {
         localStorage.tkid = tkid
     } else {
         localStorage.tkid = tkid;
+    }
+
+    if (Math.floor(w) != 788) {
+        let dif = w - 788
+        let prc = (dif / 788) * plpt;
+        plpt += Math.floor(prc);
     }
 
     createCanvas(sz * 1.2, sz);
@@ -141,10 +148,10 @@ function setup() {
     let colArr = [];
     let ncols = 10;
     let c;
-    let rdc = R.random_int(0, 5000);
+    let rdc = R.random_int(0, plpt);
     let pxsw = R.random_num(0.5, 1)
 
-    while (pxs.length < 5000) {
+    while (pxs.length < plpt) {
         let x = random(w);
         let y = random(sz);
         if (dist(x, y, w / 2, sz / 2) > w * 0.1) {
@@ -168,8 +175,6 @@ function setup() {
     }
 
     palette = colArr;
-
-    //console.log(nrot + ' - ' + xinc + ' - ' + palette.toString());
 
     star = new Star(100, 100);
     for (z = 0; z < 1200; z++) {
