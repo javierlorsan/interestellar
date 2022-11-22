@@ -166,7 +166,7 @@ function setup() {
         }
     }
 
-    if (strk <= 0.5) {
+    if (rdiv == 1) {
         for (t = 0; t < ncols; t++) {
             colArr.push(R.random_choice(paleta)[R.random_int(0, 9)]);
         }
