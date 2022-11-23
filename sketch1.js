@@ -95,7 +95,7 @@ let yinc = R.random_num(0.01, 0.1);
 let xinc = R.random_dec();
 let pntcur = R.random_dec();
 let xelle = R.random_int(10, 20);
-let nrot = R.random_int(2, 17);
+let nrot = R.random_int(4, 19);
 let img2;
 let H1 = R.random_int(0, 53);
 let H2 = R.random_int(60, 150);
