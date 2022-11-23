@@ -181,6 +181,8 @@ function setup() {
         pt.push(new parti(z, R.random_num(2, 5)));
     }
 
+    for (j = 0; j < 30; j++) { nbl();}
+
     Hcols = shfarr(Hcols);
 
     background(bgcolor);
@@ -725,7 +727,7 @@ function draw() {
 
     background(bgcolor);
 
-    if (frameCount % 8 == 0 && frameCount < 350) nbl();
+    if (frameCount % 8 == 0 && frameCount < 250) nbl();
 
     image(img2.get(), 0, 0);
 
