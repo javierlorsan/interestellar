@@ -558,7 +558,7 @@ function shape5(ph, seed, sz) {
                 img.rect(x, i * 2.5, 1, nrot);
                 break;
             case (xinc <= 0.6):
-                if (cmin != cmax) img.vertex(x, i * 2);
+                if (cmin == cmax) img.vertex(x, i * 2);
                 else img.curveVertex(x, i * 2);
                 break;
             /*case (xinc <= 0.55):
