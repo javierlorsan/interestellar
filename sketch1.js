@@ -77,8 +77,8 @@ let star;
 let pt = [];
 let speed = 1;
 let angle = 0;
-let w = sz * 1.2;
-let k = Math.floor(w / 2);
+let w = WIDTH; //sz * 1.2;
+let k = Math.floor(sz / 2);
 let pts = [], ptsch = [];
 let col1, col2, col3;
 let preduc = Math.floor(((0.85 * sz) / 657) * 100) / 100;
@@ -86,7 +86,6 @@ let incirc = (70000 * Math.floor(sz * preduc)) / 1000;
 let mot = false;
 let pxs = [];
 let t_rd = R.random_num(10000, 53600);
-//let t_rd = R.random_num(-360, 360);
 let strcol = ["#0A1B28", "#071F43", "#357D7E", "#35EEEE", "#919DF0"];
 let bModes = [];
 let bm1, bm2;
@@ -137,9 +136,9 @@ function setup() {
         plpt += Math.floor(prc);
     }
 
-    createCanvas(sz * 1.2, sz);
-    img = createGraphics(sz * 1.2, sz);
-    img2 = createGraphics(sz * 1.2, sz);
+    createCanvas(WIDTH, HEIGHT);
+    img = createGraphics(WIDTH, HEIGHT);
+    img2 = createGraphics(WIDTH, HEIGHT);
     img2.colorMode(HSB, 360, 100, 100, 10);
     pixelDensity(1);
     centerCanvas();
@@ -152,8 +151,8 @@ function setup() {
     let pxsw = R.random_num(0.5, 1)
 
     while (pxs.length < plpt) {
-        let x = random(w);
-        let y = random(sz);
+        let x = random(WIDTH);
+        let y = random(HEIGHT);
         if (dist(x, y, w / 2, sz / 2) > w * 0.1) {
             let adj = map(y, 0, sz, 255, 0);
             if (pxs.length < rdc) {
@@ -381,7 +380,7 @@ function makeTl() {
 
     //console.log(t_rd + ' ' + tp);
     let radius = sz * 0.00;
-    img.translate(sz * 1.2 / 2, sz / 2);
+    img.translate(WIDTH / 2, HEIGHT / 2);
     img.fill(bgcolor);
     img.rect(0, 0, 5, 5)
     let t = 0;
@@ -727,7 +726,7 @@ function draw() {
 
     background(bgcolor);
 
-    if (frameCount % 8 == 0 && frameCount < 250) nbl();
+    if (frameCount % 8 == 0 && frameCount < 350) nbl();
 
     image(img2.get(), 0, 0);
 
