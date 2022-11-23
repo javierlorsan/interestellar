@@ -726,7 +726,7 @@ function draw() {
 
     background(bgcolor);
 
-    if (frameCount % 8 == 0 && frameCount < 350) nbl();
+    if (frameCount % 8 == 0 && frameCount < 300) nbl();
 
     image(img2.get(), 0, 0);
 
