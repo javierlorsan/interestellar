@@ -642,7 +642,7 @@ function shape3(sz, seed, ph) {
             y = sin(t) * r1 * muldiv;
         }
         switch (true) {
-            case (xinc <= 0.1):
+            case (xinc <= 0.15):
                 if (cmin != cmax) img.curveVertex(x, y);
                 else img.vertex(x, y);
             case (xinc <= 0.4):
