@@ -554,7 +554,7 @@ function shape5(ph, seed, sz) {
                 break;
         }
         switch (true) {
-            case (xinc <= 0.15):
+            case (xinc <= 0.12):
                 img.rect(x, i * 2.5, 1, nrot);
                 break;
             case (xinc <= 0.6):
