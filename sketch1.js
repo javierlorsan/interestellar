@@ -249,7 +249,7 @@ function makeTl() {
         npoints = 490;
         spmode = R.random_choice([TRIANGLES, TRIANGLE_STRIP, QUADS])
     } else {
-        npoints = R.random_int(1000, 3200);
+        npoints = R.random_int(1500, 3500);
     }
 
     img.noiseSeed(floor(R.random_num(0, 10e6)));
