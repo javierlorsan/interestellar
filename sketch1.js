@@ -153,7 +153,7 @@ function setup() {
     while (pxs.length < plpt) {
         let x = random(WIDTH);
         let y = random(HEIGHT);
-        if (dist(x, y, w / 2, sz / 2) > w * 0.1) {
+        if (dist(x, y, w / 2, sz / 2) > w * 0.001) {
             let adj = map(y, 0, sz, 255, 0);
             if (pxs.length < rdc) {
                 c = color(60, adj, 255);
