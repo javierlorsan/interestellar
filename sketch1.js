@@ -375,8 +375,9 @@ function makeTl() {
 
     if (tipo == 3 || tipo == 5) fr = 0.1;
     if (tipo == 4) fr = 0.07;
+    
 
-    console.log(' tipo:' + tipo + ' pntcur: ' + pntcur + ' - rdiv:' + rdiv + ' - xinc:' + xinc + ' - nrot:' + nrot + ' - strk:' + strk + ' - npoints:' + npoints);
+    console.log(' tipo:' + tipo + ' pntcur: ' + pntcur + ' - rdpt:' + rdpt + ' - xinc:' + xinc + ' - nrot:' + nrot + ' - strk:' + strk + ' - npoints:' + npoints);
 
     //console.log(t_rd + ' ' + tp);
     let radius = sz * 0.00;
@@ -478,8 +479,12 @@ class cshape {
 
         img.stroke(this.col);
         img.strokeWeight(this.sz);
-        img.rotate(radians(this.ang));
-
+        //img.rotate(radians(this.ang));
+        if ((this.tipo == 2 && (xinc > 0.2 && xinc <= 0.85)) || (this.tipo == 3 && xinc > 0.4)) {
+            if (rdpt <= 0.25) img.rotate(sin(frameCount + this.ang * 2) * 150)
+            else img.rotate(radians(this.ang));
+        } else { img.rotate(radians(this.ang));}
+        
         if (this.np > 200 && this.tipo == 1) {
             if (strk > 0.7) {
                 if (floor(this.x / this.sz * this.n) % 2 == 0) { img.blendMode(bm1); }
