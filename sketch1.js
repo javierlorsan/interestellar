@@ -581,7 +581,7 @@ function shape5(ph, seed, sz) {
     img.endShape(CLOSE);
 }
 
-function shape4(sz, seed, ph) {
+function shape4(sz1, seed, ph) {
     const circleStep = sp1;
     const circleDiv = sp2;
     const xyFreq = 0.0005;
@@ -590,7 +590,7 @@ function shape4(sz, seed, ph) {
     if (strk > 0.4 && strk < 0.5) t = t_rd;
     for (let i = 0; i < circleDiv; i++) {
         for (let j = 0; j < TAU / circleDiv; j += circleStep) {
-            if (xinc >= 0.5) r1 = (sz * 3) + sin(angle * 10 + ph) * rdd2;
+            if (xinc >= 0.5) r1 = (sz1 * 3) + sin(angle * 10 + ph) * rdd2;
             else r1 = 80 + cos(j * 10 + ph) * rdd2;
             t += seed;
             const v = new V(r1 * cos(t), r1 * sin(t));
@@ -607,12 +607,12 @@ function shape4(sz, seed, ph) {
                         break;
                     case (strk <= 0.6):
                         img.strokeWeight(lnth);
-                        img.line(v.x, v.y, 1, sz * 5);
+                        img.line(v.x, v.y, 1, sz1 * 5);
                         break;
                     case (strk <= 0.8):
                         img.strokeWeight(lnth);
                         img.noFill();
-                        img.arc(v.x, v.y, sz * 1.5, sz * 1.5, 0, HALF_PI);
+                        img.arc(v.x, v.y, sz1 * 1.5, sz1 * 1.5, 0, HALF_PI);
                         break;
                     default:
                         if (pntcur > 0.5) img.rect(v.x, v.y, 1, 1);
@@ -626,7 +626,7 @@ function shape4(sz, seed, ph) {
     }
 }
 
-function shape3(sz, seed, ph) {
+function shape3(sz1, seed, ph) {
     let x, y;
     if (xinc > 0.7) {
         if (strk >= 0.5) t = t_rd
@@ -637,7 +637,7 @@ function shape3(sz, seed, ph) {
     let increment = (PI * cmin) / nrot;
     img.beginShape();
     for (let ang = 0; ang < PI * cmax; ang += increment) {
-        let r1 = (sz * 3) + sin(ang * 10 + ph) * rdd2;
+        let r1 = (sz1 * 3) + sin(ang * 10 + ph) * rdd2;
         t += seed;
         if (xinc > 0.3 && rdiv == 1) {
             x = cos(t) * r1 * muldiv;
@@ -655,17 +655,17 @@ function shape3(sz, seed, ph) {
                 break;
             case (xinc <= 0.70):
                 img.strokeWeight(lnth);
-                img.line(x, y, 1, sz * 3);
+                img.line(x, y, 1, sz1 * 3);
                 break;
             default:
                 img.strokeWeight(lnth);
                 img.noFill();
                 if (cmin != cmax) {
                     let farc = (strk < 0.5) ? PI : HALF_PI;
-                    img.arc(x, y, sz * 1.5, sz * 1.5, 0, farc);
+                    img.arc(x, y, sz1 * 1.5, sz1 * 1.5, 0, farc);
                 } else {
-                    img.arc(x, ang , sz * 4, sz * 4, PI * 0.75, PI);
-                    img.arc(-x, ang , sz * 4, sz * 4, 0, QUARTER_PI);
+                    img.arc(x, ang , sz1 * 4, sz1 * 4, PI * 0.75, PI);
+                    img.arc(-x, ang , sz1 * 4, sz1 * 4, 0, QUARTER_PI);
                 }
                 break;
         }
@@ -674,7 +674,7 @@ function shape3(sz, seed, ph) {
 }
 
 
-function shape2(sz, ph, seed) {
+function shape2(sz1, ph, seed) {
     if (strk >= 0.06) { t = t_rd }
     let pitau = (pntcur < 0.5) ? PI : TAU;
     img.rotate(pitau / nrot);
@@ -692,21 +692,21 @@ function shape2(sz, ph, seed) {
                 break;
             case (xinc <= 0.55):
                 img.strokeWeight(lnth);
-                img.line(x, y, sh2ln, sz * 1.5);
+                img.line(x, y, sh2ln, sz1 * 1.5);
                 break;
             case (xinc <= 0.85):
                 img.strokeWeight(lnth);
                 img.noFill();
                 if (cmin == cmax) {
-                    img.arc(x, y, sz * 2, sz * 3, PI * 0.75, PI);
-                    img.arc(-x, y, sz * 2, sz * 3, 0, QUARTER_PI);
+                    img.arc(x, y, sz1 * 2, sz1 * 3, PI * 0.75, PI);
+                    img.arc(-x, y, sz1 * 2, sz1 * 3, 0, QUARTER_PI);
                 } else {
-                    img.arc(x, a * 2, sz * 2, sz * 3, PI * 0.75, PI);
-                    img.arc(-x, a * 2, sz * 2, sz * 3, 0, QUARTER_PI);
+                    img.arc(x, a * 2, sz1 * 2, sz1 * 3, PI * 0.75, PI);
+                    img.arc(-x, a * 2, sz1 * 2, sz1 * 3, 0, QUARTER_PI);
                 }
                 break;
             default:
-                img.rect(x, y, 100 - (r1 * 0.5), sz * 0.1);
+                img.rect(x, y, 100 - (r1 * 0.5), sz1 * 0.1);
                 break;
         }
     }
