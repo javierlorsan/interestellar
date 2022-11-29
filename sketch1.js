@@ -732,14 +732,13 @@ function draw() {
     background(bgcolor);
 
     if (frameCount % 8 == 0 && frameCount < 300) nbl();
-
     image(img2.get(), 0, 0);
 
     push();
-    translate(sz * 1.2 / 2, sz / 2);
+    translate(WIDTH/ 2, sz / 2);
     angle -= 0.002;
     rotate(angle);
-
+    
     for (let p of pt) {
         p.update();
         p.show();
@@ -950,6 +949,7 @@ function nbl() {
     }
     yoff += yinc;
     img2.pop();
+
 }
 
 function nW(x, y) {
