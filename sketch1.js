@@ -479,12 +479,25 @@ class cshape {
 
         img.stroke(this.col);
         img.strokeWeight(this.sz);
-        //img.rotate(radians(this.ang));
-        if ((this.tipo == 2 && (xinc > 0.2 && xinc <= 0.85)) || (this.tipo == 3 && xinc > 0.4)) {
-            if (rdpt <= 0.25) img.rotate(sin(frameCount + this.ang * 2) * 150)
-            else img.rotate(radians(this.ang));
-        } else { img.rotate(radians(this.ang));}
-        
+
+        if (this.tipo > 1) {
+            if (cmin > 5) {
+                if ((this.tipo == 2 && (xinc > 0.2 && xinc <= 0.85)) || (this.tipo == 3 && xinc > 0.4)) {
+                    if (rdpt <= 0.25) img.rotate(sin(frameCount + this.ang * 2) * 150)
+                    else img.rotate(radians(this.ang));
+                } else { img.rotate(radians(this.ang)); }
+            } else {
+                if (second() > 30 && second() < 50) {
+                    if ((this.tipo == 2 && (xinc > 0.2 && xinc <= 0.85)) || (this.tipo == 3 && xinc > 0.4)) {
+                        if (rdpt <= 0.25) img.rotate(sin(frameCount + this.ang * 2) * 150)
+                        else img.rotate(radians(this.ang));
+                    } else { img.rotate(radians(this.ang)); }
+                }
+            }
+        } else {
+            img.rotate(radians(this.ang));
+        }
+
         if (this.np > 200 && this.tipo == 1) {
             if (strk > 0.7) {
                 if (floor(this.x / this.sz * this.n) % 2 == 0) { img.blendMode(bm1); }
